@@ -1,0 +1,21 @@
+# Node
+client/node_modules
+client/dist
+
+# Python
+server/venv
+server/__pycache__
+server/.pytest_cache
+server/*.pyc
+server/**/*.pyc
+
+# Env files
+server/.env
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Jupyter
+notebooks/.ipynb_checkpoints
