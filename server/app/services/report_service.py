@@ -1,11 +1,8 @@
-from app.core.database import db
+from app.repositories.report_repository import ReportRepository
+
+repository = ReportRepository()
 
 
 def save_report(report):
-    collection = db["reports"]
 
-    result = collection.insert_one(report)
-
-    report["_id"] = str(result.inserted_id)
-
-    return report
+    return repository.insert(report)
