@@ -2,7 +2,7 @@ from torchvision import datasets
 from torchvision import transforms
 from torch.utils.data import DataLoader
 
-from configs.dataset_config import *
+from training.configs.dataset_config import *
 
 # ===========================
 # Image Transformations
