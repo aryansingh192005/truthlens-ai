@@ -1,46 +1,96 @@
-from torchvision import datasets
-from torchvision import transforms
-from torch.utils.data import DataLoader
+from pathlib import Path
+import random
 
+from torch.utils.data import DataLoader
+from torchvision import transforms
+
+from training.datasets.deepfake_dataset import DeepfakeDataset
 from training.configs.dataset_config import *
 
-# ===========================
-# Image Transformations
-# ===========================
+random.seed(SEED)
 
-train_transform = transforms.Compose([
-    transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(10),
-    transforms.ColorJitter(
-        brightness=0.2,
-        contrast=0.2,
-        saturation=0.2
-    ),
-    transforms.ToTensor(),
-])
+def get_transforms():
 
-val_transform = transforms.Compose([
-    transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-    transforms.ToTensor(),
-])
+    train_transform = transforms.Compose([
+        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.RandomHorizontalFlip(),
+        transforms.RandomRotation(10),
+        transforms.ColorJitter(
+            brightness=0.2,
+            contrast=0.2,
+            saturation=0.2
+        ),
+        transforms.ToTensor()
+    ])
 
+    val_transform = transforms.Compose([
+        transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        transforms.ToTensor()
+    ])
+
+    return train_transform, val_transform
+
+    def collect_images(split):
+
+      image_paths = []
+    labels = []
+
+    classes = {
+        "Fake": 0,
+        "Real": 1
+    }
+
+    for class_name, label in classes.items():
+
+        folder = DATASET_ROOT / split / class_name
+
+        for image_path in folder.glob("*"):
+
+            image_paths.append(image_path)
+            labels.append(label)
+
+    return image_paths, labels
+
+def shuffle_dataset(image_paths, labels):
+
+    combined = list(zip(image_paths, labels))
+
+    random.shuffle(combined)
+
+    image_paths, labels = zip(*combined)
+
+    return list(image_paths), list(labels)
 
 def get_dataloaders():
 
-    train_dataset = datasets.ImageFolder(
-        DATASET_ROOT / "Train",
-        transform=train_transform
+    train_transform, val_transform = get_transforms()
+
+    # Collect images
+    train_paths, train_labels = collect_images("Train")
+    val_paths, val_labels = collect_images("Validation")
+    test_paths, test_labels = collect_images("Test")
+
+    # Shuffle
+    train_paths, train_labels = shuffle_dataset(train_paths, train_labels)
+    val_paths, val_labels = shuffle_dataset(val_paths, val_labels)
+    test_paths, test_labels = shuffle_dataset(test_paths, test_labels)
+
+    train_dataset = DeepfakeDataset(
+        train_paths,
+        train_labels,
+        train_transform
     )
 
-    val_dataset = datasets.ImageFolder(
-        DATASET_ROOT / "Validation",
-        transform=val_transform
+    val_dataset = DeepfakeDataset(
+        val_paths,
+        val_labels,
+        val_transform
     )
 
-    test_dataset = datasets.ImageFolder(
-        DATASET_ROOT / "Test",
-        transform=val_transform
+    test_dataset = DeepfakeDataset(
+        test_paths,
+        test_labels,
+        val_transform
     )
 
     train_loader = DataLoader(
