@@ -1,22 +1,24 @@
 from pathlib import Path
 
-# Root directory of the dataset
-DATASET_ROOT = Path("../dataset")
+# =====================================================
+# DATASET CONFIGURATION
+# =====================================================
 
-# Image size expected by EfficientNet-B0
+# Root dataset directory
+DATASET_ROOT = Path("/content/dataset/Dataset")
+
+# Image settings
 IMAGE_SIZE = 224
 
-# Batch size
-BATCH_SIZE = 16
-
-# Number of workers
+# Training
+BATCH_SIZE = 32
 NUM_WORKERS = 2
-
-# Training epochs
-EPOCHS = 10
-
-# Learning rate
-LEARNING_RATE = 1e-4
 
 # Random seed
 SEED = 42
+
+# Class names
+CLASSES = [
+    "Fake",
+    "Real"
+]
