@@ -72,10 +72,8 @@ class Trainer:
 
          self.best_accuracy = accuracy
 
-         save_path = os.path.join(
-            CHECKPOINT_DIR,
-            "best_model.pth"
-         )
+         save_path = CHECKPOINT_DIR / "best_model.pth"
+         
 
          torch.save(
             self.model.state_dict(),
