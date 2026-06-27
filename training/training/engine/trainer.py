@@ -1,6 +1,6 @@
 import torch
 import os
-
+from tqdm import tqdm
 from training.configs.training_config import (
     DEVICE,
     CHECKPOINT_DIR,
@@ -91,7 +91,13 @@ class Trainer:
 
         running_loss = 0.0
 
-        for batch_idx, (images, labels) in enumerate(self.train_loader):
+        progress_bar = tqdm(
+        self.train_loader,
+        desc="Training",
+        leave=False
+   )
+
+        for images, labels in progress_bar:
             images = images.to(self.device)
             labels = labels.to(self.device)
             self.optimizer.zero_grad()
@@ -105,11 +111,11 @@ class Trainer:
 
             running_loss += loss.item()
 
-            if batch_idx % 50 == 0:
-                print(
-                f"Batch {batch_idx}/{len(self.train_loader)} "
-                f"Loss: {loss.item():.4f}"
-               )
+            progress_bar.set_postfix({
+            "loss": f"{loss.item():.4f}"
+        })
+
+            
         epoch_loss = running_loss / len(self.train_loader)
         return epoch_loss
     
