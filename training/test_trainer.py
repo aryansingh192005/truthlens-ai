@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch.optim as optim
 
+from training.configs.training_config import EPOCHS
 from training.datasets.dataset import get_dataloaders
 from training.models.efficientnet import build_model
 from training.engine.trainer import Trainer
@@ -19,11 +20,13 @@ optimizer = optim.Adam(
 )
 
 trainer = Trainer(
-    model=model,
-    train_loader=train_loader,
-    val_loader=val_loader,
-    criterion=criterion,
-    optimizer=optimizer,
+    model,
+    train_loader,
+    val_loader,
+    criterion,
+    optimizer,
 )
 
-print("Trainer initialized successfully!")
+print("Starting training...")
+
+trainer.fit(epochs=1)
