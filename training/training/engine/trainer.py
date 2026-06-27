@@ -1,5 +1,7 @@
 import torch
 
+from training.utils.metrics import calculate_metrics
+
 from training.configs.training_config import DEVICE
 
 
@@ -25,6 +27,38 @@ class Trainer:
         self.optimizer = optimizer
 
         print(f"Using device: {self.device}")
+
+    
+    def validate(self):
+        self.model.eval()
+
+        running_loss = 0.0
+
+        predictions = []
+        labels_list = []
+
+        with torch.no_grad():
+            for images, labels in self.val_loader:
+                images = images.to(self.device)
+                labels = labels.to(self.device)
+
+                outputs = self.model(images)
+
+                loss = self.criterion(outputs, labels)
+
+                running_loss += loss.item()
+
+                preds = outputs.argmax(dim=1)
+
+                predictions.extend(preds.cpu().numpy())
+
+                labels_list.extend(labels.cpu().numpy())
+        val_loss = running_loss / len(self.val_loader)
+        metrics = calculate_metrics(
+        labels_list,
+        predictions
+       )
+        return val_loss, metrics
     
     def train_one_epoch(self):
         self.model.train()
@@ -55,6 +89,17 @@ class Trainer:
     
     def fit(self, epochs):
         for epoch in range(epochs):
-            print(f"\nEpoch {epoch + 1}/{epochs}")
+            print(f"Epoch {epoch + 1}/{epochs}")
+
             train_loss = self.train_one_epoch()
-            print(f"Training Loss: {train_loss:.4f}")
+
+            val_loss, metrics = self.validate()
+
+            
+            print(f"Training Loss: {train_loss:.4f} ")
+            print(f"Validation Loss: {val_loss:.4f} ")
+            print(f"Accuracy : {metrics['accuracy']:.4f}")
+            print(f"Precision: {metrics['precision']:.4f}")
+            print(f"Recall   : {metrics['recall']:.4f}")
+            print(f"F1 Score : {metrics['f1']:.4f}")
+                 
