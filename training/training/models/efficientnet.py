@@ -1,7 +1,8 @@
 import torch.nn as nn
+
 from torchvision.models import (
     efficientnet_b0,
-    EfficientNet_B0_Weights
+    EfficientNet_B0_Weights,
 )
 
 
