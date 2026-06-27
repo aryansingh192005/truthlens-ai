@@ -1,0 +1,7 @@
+MODEL_NAME = "EfficientNet-B0"
+
+NUM_CLASSES = 2
+
+DROPOUT = 0.3
+
+FREEZE_BACKBONE = True
