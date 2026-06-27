@@ -1,4 +1,10 @@
 import torch
+import os
+
+from training.configs.training_config import (
+    DEVICE,
+    CHECKPOINT_DIR,
+)
 
 from training.utils.metrics import calculate_metrics
 
@@ -27,7 +33,7 @@ class Trainer:
         self.optimizer = optimizer
 
         print(f"Using device: {self.device}")
-
+        self.best_accuracy = 0.0
     
     def validate(self):
         self.model.eval()
@@ -59,6 +65,28 @@ class Trainer:
         predictions
        )
         return val_loss, metrics
+    
+    def save_checkpoint(self, accuracy):
+
+        if accuracy > self.best_accuracy:
+
+         self.best_accuracy = accuracy
+
+         save_path = os.path.join(
+            CHECKPOINT_DIR,
+            "best_model.pth"
+         )
+
+         torch.save(
+            self.model.state_dict(),
+            save_path
+         )
+
+         print("\n✅ New best model saved!")
+
+        else:
+
+         print("\nModel did not improve.")
     
     def train_one_epoch(self):
         self.model.train()
@@ -102,4 +130,5 @@ class Trainer:
             print(f"Precision: {metrics['precision']:.4f}")
             print(f"Recall   : {metrics['recall']:.4f}")
             print(f"F1 Score : {metrics['f1']:.4f}")
+            self.save_checkpoint(metrics["accuracy"])
                  
