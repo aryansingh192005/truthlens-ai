@@ -16,7 +16,7 @@ CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
 # Training
 # -----------------------
 
-EPOCHS = 10
+EPOCHS = 15
 
 LEARNING_RATE = 1e-4
 
