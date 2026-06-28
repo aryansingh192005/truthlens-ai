@@ -1,5 +1,7 @@
-from PIL import Image
+from pathlib import Path
 
+import torch
+from PIL import Image
 from torchvision import transforms
 
 
@@ -14,10 +16,12 @@ transform = transforms.Compose([
 
 def preprocess_image(image_path):
 
+    image_path = Path(image_path)
+
     image = Image.open(image_path).convert("RGB")
 
-    tensor = transform(image)
+    image = transform(image)
 
-    tensor = tensor.unsqueeze(0)
+    image = image.unsqueeze(0)
 
-    return tensor
+    return image
