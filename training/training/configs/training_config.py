@@ -1,31 +1,17 @@
-import os
 from pathlib import Path
-import torch
 
-# -----------------------
+# -------------------------------------------------
 # Paths
-# -----------------------
+# -------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+# Local checkpoint folder (for local training)
+LOCAL_CHECKPOINT_DIR = BASE_DIR / "checkpoints"
 
-CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
+LOCAL_CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
 
-# -----------------------
-# Training
-# -----------------------
-
-EPOCHS = 15
-
-LEARNING_RATE = 1e-4
-
-WEIGHT_DECAY = 1e-4
-
-# -----------------------
-# Device
-# -----------------------
-
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
-PRINT_EVERY = 50
+# Google Drive checkpoint folder (for Colab)
+GOOGLE_DRIVE_CHECKPOINT_DIR = Path(
+    "/content/drive/MyDrive/TruthLens-AI/checkpoints"
+)

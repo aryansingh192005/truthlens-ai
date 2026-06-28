@@ -9,7 +9,13 @@ from training.configs.training_config import (
 from training.utils.metrics import calculate_metrics
 
 from training.configs.training_config import DEVICE
+from pathlib import Path
 
+from training.configs.training_config import (
+    DEVICE,
+    LOCAL_CHECKPOINT_DIR,
+    GOOGLE_DRIVE_CHECKPOINT_DIR,
+)
 
 class Trainer:
 
@@ -34,6 +40,10 @@ class Trainer:
 
         print(f"Using device: {self.device}")
         self.best_accuracy = 0.0
+        if GOOGLE_DRIVE_CHECKPOINT_DIR.exists():
+          self.checkpoint_dir = GOOGLE_DRIVE_CHECKPOINT_DIR
+        else:
+          self.checkpoint_dir = LOCAL_CHECKPOINT_DIR
     
     def validate(self):
         self.model.eval()
@@ -66,25 +76,51 @@ class Trainer:
        )
         return val_loss, metrics
     
-    def save_checkpoint(self, accuracy):
+    def save_checkpoint(self, epoch, accuracy):
 
-        if accuracy > self.best_accuracy:
+      if accuracy <= self.best_accuracy:
+        print("\nModel did not improve.")
+        return
 
-         self.best_accuracy = accuracy
+      self.best_accuracy = accuracy
 
-         save_path = CHECKPOINT_DIR / "best_model.pth"
-         
+      checkpoint = {
+        "epoch": epoch,
+        "best_accuracy": accuracy,
+        "model_state_dict": self.model.state_dict(),
+        "optimizer_state_dict": self.optimizer.state_dict(),
+       }
 
-         torch.save(
-            self.model.state_dict(),
-            save_path
-         )
+      checkpoint_path = self.checkpoint_dir / "best_model.pth"
 
-         print("\n✅ New best model saved!")
+      torch.save(checkpoint, checkpoint_path)
 
-        else:
+      print(f"\n✅ Best model saved to:\n{checkpoint_path}")
 
-         print("\nModel did not improve.")
+    def load_checkpoint(self):
+       checkpoint_path = self.checkpoint_dir / "best_model.pth"
+       if not checkpoint_path.exists():
+          print("No checkpoint found. Starting fresh training.")
+          return 0
+       checkpoint = torch.load(
+        checkpoint_path,
+        map_location=self.device
+        )
+       self.model.load_state_dict(
+        checkpoint["model_state_dict"]
+        )
+       self.optimizer.load_state_dict(
+        checkpoint["optimizer_state_dict"]
+       )
+       self.best_accuracy = checkpoint["best_accuracy"]
+       start_epoch = checkpoint["epoch"] + 1
+       print("\n" + "=" * 60)
+       print("Checkpoint loaded successfully!")
+       print(f"Resuming from Epoch: {start_epoch}")
+       print(f"Best Accuracy: {self.best_accuracy:.4f}")
+       print("=" * 60)
+
+       return start_epoch
     
     def train_one_epoch(self):
         self.model.train()
@@ -120,8 +156,9 @@ class Trainer:
         return epoch_loss
     
     def fit(self, epochs):
-        for epoch in range(epochs):
-            print(f"Epoch {epoch + 1}/{epochs}")
+        start_epoch = self.load_checkpoint()
+        for epoch in range(start_epoch, epochs):
+            print(f"\nEpoch {epoch + 1}/{epochs}")
 
             train_loss = self.train_one_epoch()
 
@@ -134,5 +171,8 @@ class Trainer:
             print(f"Precision: {metrics['precision']:.4f}")
             print(f"Recall   : {metrics['recall']:.4f}")
             print(f"F1 Score : {metrics['f1']:.4f}")
-            self.save_checkpoint(metrics["accuracy"])
+            self.save_checkpoint(
+                epoch,
+                metrics["accuracy"]
+          )
                  
