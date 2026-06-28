@@ -1,18 +1,36 @@
+from pathlib import Path
+
 import torch
 
-from app.ml.models.deepfake_model import DeepfakeDetector
+from training.models.efficientnet import build_model
 
-MODEL = None
+
+MODEL_PATH = Path("../ml/weights/best_model.pth")
+
+_model = None
 
 
 def load_model():
 
-    global MODEL
+    global _model
 
-    if MODEL is None:
+    if _model is not None:
+        return _model
 
-        MODEL = DeepfakeDetector()
+    model = build_model()
 
-        MODEL.eval()
+    checkpoint = torch.load(
+        MODEL_PATH,
+        map_location="cpu"
+    )
 
-    return MODEL
+    if "model_state_dict" in checkpoint:
+        model.load_state_dict(checkpoint["model_state_dict"])
+    else:
+        model.load_state_dict(checkpoint)
+
+    model.eval()
+
+    _model = model
+
+    return _model
