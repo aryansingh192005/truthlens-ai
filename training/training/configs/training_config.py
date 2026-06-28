@@ -1,17 +1,40 @@
 from pathlib import Path
+import torch
 
-# -------------------------------------------------
-# Paths
-# -------------------------------------------------
+# =====================================================
+# Device
+# =====================================================
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+# =====================================================
+# Training
+# =====================================================
+
+EPOCHS = 15
+LEARNING_RATE = 1e-4
+WEIGHT_DECAY = 1e-4
+
+PRINT_EVERY = 50
+
+# =====================================================
+# Checkpoint Directories
+# =====================================================
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-# Local checkpoint folder (for local training)
-LOCAL_CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+if Path("/kaggle/working").exists():
 
-LOCAL_CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
+    CHECKPOINT_DIR = Path("/kaggle/working/checkpoints")
 
-# Google Drive checkpoint folder (for Colab)
-GOOGLE_DRIVE_CHECKPOINT_DIR = Path(
-    "/content/drive/MyDrive/TruthLens-AI/checkpoints"
-)
+elif Path("/content/drive").exists():
+
+    CHECKPOINT_DIR = Path(
+        "/content/drive/MyDrive/TruthLens-AI/checkpoints"
+    )
+
+else:
+
+    CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+
+CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)

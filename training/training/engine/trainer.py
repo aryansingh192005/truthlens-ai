@@ -40,10 +40,7 @@ class Trainer:
 
         print(f"Using device: {self.device}")
         self.best_accuracy = 0.0
-        if GOOGLE_DRIVE_CHECKPOINT_DIR.exists():
-          self.checkpoint_dir = GOOGLE_DRIVE_CHECKPOINT_DIR
-        else:
-          self.checkpoint_dir = LOCAL_CHECKPOINT_DIR
+        self.checkpoint_dir = CHECKPOINT_DIR
     
     def validate(self):
         self.model.eval()
