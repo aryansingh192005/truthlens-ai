@@ -38,3 +38,11 @@ else:
     CHECKPOINT_DIR = BASE_DIR / "checkpoints"
 
 CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
+
+# =====================================================
+# Logs
+# =====================================================
+
+LOG_DIR = CHECKPOINT_DIR.parent / "logs"
+
+LOG_DIR.mkdir(parents=True, exist_ok=True)
