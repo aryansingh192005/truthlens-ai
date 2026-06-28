@@ -16,7 +16,25 @@ else:
 # Dataset
 # =====================================================
 
-DATASET_ROOT = PROJECT_ROOT
+from pathlib import Path
+
+# -----------------------------
+# Dataset Root
+# -----------------------------
+
+if Path("/kaggle/input").exists():
+
+    DATASET_ROOT = Path(
+        "/kaggle/input/datasets/manjilkarki/deepfake-and-real-images/Dataset"
+    )
+
+elif Path("/content/dataset").exists():
+
+    DATASET_ROOT = Path("/content/dataset/Dataset")
+
+else:
+
+    DATASET_ROOT = Path("dataset")
 
 IMAGE_SIZE = 224
 
