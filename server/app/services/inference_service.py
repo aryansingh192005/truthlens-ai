@@ -1,24 +1,13 @@
-import torch
+from pathlib import Path
 
-from app.ml.inference.model_loader import load_model
-from app.ml.preprocessing.image_processor import preprocess
+from app.ml.inference.predictor import predict
 
 
-def predict(image_path):
+class InferenceService:
 
-    model = load_model()
+    @staticmethod
+    def predict_image(image_path: Path):
 
-    image = preprocess(image_path)
+        result = predict(image_path)
 
-    with torch.no_grad():
-
-        output = model(image)
-
-    probabilities = torch.softmax(output, dim=1)
-
-    confidence, prediction = torch.max(probabilities, dim=1)
-
-    return {
-        "prediction": int(prediction),
-        "confidence": float(confidence)
-    }
+        return result

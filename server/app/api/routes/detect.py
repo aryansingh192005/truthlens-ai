@@ -1,42 +1,31 @@
-from fastapi import APIRouter
-from fastapi import UploadFile
-from fastapi import File
-from fastapi import HTTPException
+from pathlib import Path
+import shutil
 
-from app.utils.validator import get_media_type
-from app.services.file_service import save_upload
-from app.models.report import create_report
-from app.services.report_service import save_report
+from fastapi import APIRouter, File, UploadFile, HTTPException
 
-router = APIRouter(tags=["Detection"])
+from app.services.inference_service import InferenceService
+
+router = APIRouter()
 
 
-@router.post("/upload")
-async def upload_media(
-    file: UploadFile = File(...)
-):
+UPLOAD_DIR = Path("app/uploads/images")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
-    media_type = get_media_type(file.filename)
 
-    if media_type is None:
+@router.post("/predict")
+async def predict(file: UploadFile = File(...)):
+
+    if not file.content_type.startswith("image/"):
         raise HTTPException(
             status_code=400,
-            detail="Unsupported file format."
+            detail="Only image files are allowed."
         )
 
-    file_path = save_upload(
-        file,
-        media_type
-    )
+    file_path = UPLOAD_DIR / file.filename
 
-    report = create_report(
-        filename=file.filename,
-        media_type=media_type,
-        file_path=file_path
-    )
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
 
-    saved_report = save_report(report)
-    return {
-    "success": True,
-    "report": saved_report
-}
+    result = InferenceService.predict_image(file_path)
+
+    return result

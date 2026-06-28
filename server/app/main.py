@@ -20,7 +20,11 @@ app.add_middleware(
 
 app.include_router(health_router, prefix="/api")
 app.include_router(detect_router, prefix="/api")
-
+app.include_router(
+    detect_router,
+    prefix="/api",
+    tags=["Inference"]
+)
 
 @app.get("/")
 def root():

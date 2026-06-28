@@ -12,9 +12,17 @@ def build_model(num_classes=2):
 
     model = efficientnet_b0(weights=weights)
 
-    # Freeze feature extractor
+    # Freeze everything
     for param in model.features.parameters():
-        param.requires_grad = False
+     param.requires_grad = False
+
+    # Unfreeze the last feature block
+    for param in model.features[7].parameters():
+     param.requires_grad = True
+
+     # Unfreeze the final convolution block
+    for param in model.features[8].parameters():
+     param.requires_grad = True
 
     in_features = model.classifier[1].in_features
 

@@ -11,8 +11,8 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 # Training
 # =====================================================
 
-EPOCHS = 15
-LEARNING_RATE = 1e-4
+EPOCHS = 10
+LEARNING_RATE = 1e-5
 WEIGHT_DECAY = 1e-4
 
 PRINT_EVERY = 50
