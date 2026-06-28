@@ -2,47 +2,65 @@ from pathlib import Path
 import torch
 
 # =====================================================
-# Device
+# Device Configuration
 # =====================================================
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # =====================================================
-# Training
+# Training Hyperparameters
 # =====================================================
 
-EPOCHS = 10
-LEARNING_RATE = 1e-5
+EPOCHS = 10                 # Fine-tuning epochs
+LEARNING_RATE = 1e-5        # Lower LR for fine-tuning
 WEIGHT_DECAY = 1e-4
 
 PRINT_EVERY = 50
 
 # =====================================================
-# Checkpoint Directories
+# Base Directory
 # =====================================================
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-if Path("/kaggle/working").exists():
+# =====================================================
+# Google Colab + Google Drive
+# =====================================================
 
-    CHECKPOINT_DIR = Path("/kaggle/working/checkpoints")
+COLAB_DRIVE = Path("/content/drive")
 
-elif Path("/content/drive").exists():
+if COLAB_DRIVE.exists():
 
-    CHECKPOINT_DIR = Path(
-        "/content/drive/MyDrive/TruthLens-AI/checkpoints"
-    )
+    PROJECT_DIR = COLAB_DRIVE / "MyDrive" / "TruthLens-AI"
 
 else:
 
-    CHECKPOINT_DIR = BASE_DIR / "checkpoints"
+    # Local development (VS Code)
+    PROJECT_DIR = BASE_DIR
 
+# =====================================================
+# Checkpoints
+# =====================================================
+
+CHECKPOINT_DIR = PROJECT_DIR / "checkpoints"
 CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
 
 # =====================================================
 # Logs
 # =====================================================
 
-LOG_DIR = CHECKPOINT_DIR.parent / "logs"
-
+LOG_DIR = PROJECT_DIR / "logs"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+# =====================================================
+# Exported Models & Results
+# =====================================================
+
+EXPORT_DIR = PROJECT_DIR / "exports"
+EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+
+# =====================================================
+# Experiment Information
+# =====================================================
+
+EXPERIMENT_NAME = "EfficientNetB0_FineTune_v1"

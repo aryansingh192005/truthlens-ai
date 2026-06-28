@@ -5,30 +5,52 @@ from torchvision.models import (
     EfficientNet_B0_Weights,
 )
 
+from training.configs.dataset_config import NUM_CLASSES
 
-def build_model(num_classes=2):
+
+def build_model(num_classes=NUM_CLASSES):
+    """
+    Builds an EfficientNet-B0 model for deepfake detection.
+
+    Fine-Tuning Strategy:
+    - Freeze early feature extractor layers.
+    - Unfreeze the last two feature blocks.
+    - Replace the classifier for binary classification.
+    """
+
+    # --------------------------------------------------
+    # Load pretrained EfficientNet-B0
+    # --------------------------------------------------
 
     weights = EfficientNet_B0_Weights.DEFAULT
-
     model = efficientnet_b0(weights=weights)
 
-    # Freeze everything
+    # --------------------------------------------------
+    # Freeze entire backbone
+    # --------------------------------------------------
+
     for param in model.features.parameters():
-     param.requires_grad = False
+        param.requires_grad = False
 
-    # Unfreeze the last feature block
+    # --------------------------------------------------
+    # Fine-tune last feature blocks
+    # --------------------------------------------------
+
     for param in model.features[7].parameters():
-     param.requires_grad = True
+        param.requires_grad = True
 
-     # Unfreeze the final convolution block
     for param in model.features[8].parameters():
-     param.requires_grad = True
+        param.requires_grad = True
+
+    # --------------------------------------------------
+    # Replace classifier
+    # --------------------------------------------------
 
     in_features = model.classifier[1].in_features
 
     model.classifier = nn.Sequential(
-        nn.Dropout(0.3),
-        nn.Linear(in_features, num_classes)
+        nn.Dropout(p=0.3),
+        nn.Linear(in_features, num_classes),
     )
 
     return model

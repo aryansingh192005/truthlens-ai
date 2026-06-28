@@ -18,18 +18,34 @@ def main():
     print("TruthLens AI Training")
     print("=" * 60)
 
+    # ---------------------------------------------
+    # Load Dataset
+    # ---------------------------------------------
     train_loader, val_loader, test_loader = get_dataloaders()
 
+    # ---------------------------------------------
+    # Build Model
+    # ---------------------------------------------
     model = build_model()
 
+    # ---------------------------------------------
+    # Loss Function
+    # ---------------------------------------------
     criterion = nn.CrossEntropyLoss()
 
+    # ---------------------------------------------
+    # Optimizer
+    # Train only parameters with requires_grad=True
+    # ---------------------------------------------
     optimizer = optim.Adam(
-        model.parameters(),
+        filter(lambda p: p.requires_grad, model.parameters()),
         lr=LEARNING_RATE,
-        weight_decay=WEIGHT_DECAY
+        weight_decay=WEIGHT_DECAY,
     )
 
+    # ---------------------------------------------
+    # Trainer
+    # ---------------------------------------------
     trainer = Trainer(
         model=model,
         train_loader=train_loader,
@@ -38,6 +54,9 @@ def main():
         optimizer=optimizer,
     )
 
+    # ---------------------------------------------
+    # Train
+    # ---------------------------------------------
     trainer.fit(EPOCHS)
 
     print("\nTraining Complete!")

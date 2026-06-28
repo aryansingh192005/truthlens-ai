@@ -156,11 +156,11 @@ class Trainer:
 
             print("\nModel did not improve.")
 
-    # ---------------------------------------------------
+        # ---------------------------------------------------
     # Load Checkpoint
     # ---------------------------------------------------
 
-    def load_checkpoint(self):
+    def load_checkpoint(self, resume=True):
 
         checkpoint_path = self.checkpoint_dir / "best_model.pth"
 
@@ -179,21 +179,35 @@ class Trainer:
             checkpoint["model_state_dict"]
         )
 
-        self.optimizer.load_state_dict(
-            checkpoint["optimizer_state_dict"]
-        )
+        if resume:
 
-        self.best_accuracy = checkpoint["best_accuracy"]
+            self.optimizer.load_state_dict(
+                checkpoint["optimizer_state_dict"]
+            )
 
-        start_epoch = checkpoint["epoch"] + 1
+            self.best_accuracy = checkpoint["best_accuracy"]
 
-        print("\n" + "=" * 60)
-        print("Checkpoint loaded successfully!")
-        print(f"Resuming from Epoch: {start_epoch}")
-        print(f"Best Accuracy: {self.best_accuracy:.4f}")
-        print("=" * 60)
+            start_epoch = checkpoint["epoch"] + 1
 
-        return start_epoch
+            print("\n" + "=" * 60)
+            print("Checkpoint loaded successfully!")
+            print(f"Resuming from Epoch: {start_epoch}")
+            print(f"Best Accuracy: {self.best_accuracy:.4f}")
+            print("=" * 60)
+
+            return start_epoch
+
+        else:
+
+            self.best_accuracy = checkpoint["best_accuracy"]
+
+            print("\n" + "=" * 60)
+            print("Best model loaded for Fine-Tuning!")
+            print(f"Previous Best Accuracy: {self.best_accuracy:.4f}")
+            print("Starting Fine-Tuning from Epoch 1")
+            print("=" * 60)
+
+            return 0
 
     # ---------------------------------------------------
     # Save Training History
@@ -230,7 +244,7 @@ class Trainer:
 
     def fit(self, epochs):
 
-        start_epoch = self.load_checkpoint()
+        start_epoch = self.load_checkpoint(resume=False)
 
         for epoch in range(start_epoch, epochs):
 
