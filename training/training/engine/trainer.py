@@ -49,40 +49,34 @@ class Trainer:
 
      running_loss = 0.0
 
-     print("\n========== TRAINING STARTED ==========")
+     progress_bar = tqdm(
+        self.train_loader,
+        desc="Training",
+        leave=True,
+     )
 
-     for batch_idx, (images, labels) in enumerate(self.train_loader):
+     for batch_idx, (images, labels) in enumerate(progress_bar):
 
-        print(f"\nBatch {batch_idx}")
-
-        print("1. Moving images to GPU...")
         images = images.to(self.device)
         labels = labels.to(self.device)
 
-        print("2. Zero gradients...")
         self.optimizer.zero_grad()
 
-        print("3. Forward pass...")
         outputs = self.model(images)
 
-        print("4. Computing loss...")
         loss = self.criterion(outputs, labels)
 
-        print(f"Loss: {loss.item():.4f}")
-
-        print("5. Backward pass...")
         loss.backward()
 
-        print("6. Optimizer step...")
         self.optimizer.step()
 
         running_loss += loss.item()
 
-        print("✓ First batch completed successfully!")
+        progress_bar.set_postfix(
+            loss=f"{loss.item():.4f}"
+        )
 
-        # Stop after first batch
-        break
-     return running_loss
+     return running_loss / len(self.train_loader)
 
     # ---------------------------------------------------
     # Validation
