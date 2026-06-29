@@ -162,7 +162,7 @@ class Trainer:
 
     def load_checkpoint(self, resume=True):
 
-        checkpoint_path = self.checkpoint_dir / "best_model.pth"
+        checkpoint_path = self.checkpoint_dir / "latest_checkpoint.pth"
 
         if not checkpoint_path.exists():
 
