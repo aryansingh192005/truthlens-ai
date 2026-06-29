@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import HowItWorks from "../components/HowItWorks";
 import Features from "../components/Features";
+import UploadSection from "../components/UploadSection";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Stats />
       <HowItWorks />
       <Features />
+      <UploadSection />
     </div>
   );
 }
