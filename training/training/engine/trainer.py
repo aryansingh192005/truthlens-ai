@@ -47,11 +47,11 @@ class Trainer:
 
      self.model.train()
 
-    running_loss = 0.0
+     running_loss = 0.0
 
-    print("\n========== TRAINING STARTED ==========")
+     print("\n========== TRAINING STARTED ==========")
 
-    for batch_idx, (images, labels) in enumerate(self.train_loader):
+     for batch_idx, (images, labels) in enumerate(self.train_loader):
 
         print(f"\nBatch {batch_idx}")
 
@@ -82,8 +82,7 @@ class Trainer:
 
         # Stop after first batch
         break
-
-    return running_loss
+     return running_loss
 
     # ---------------------------------------------------
     # Validation
