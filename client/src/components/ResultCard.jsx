@@ -1,4 +1,5 @@
 import ModelInfo from "./ModelInfo";
+import ForensicReport from "./ForensicReport";
 
 export default function ResultCard({ result }) {
   if (!result) return null;
@@ -24,6 +25,20 @@ export default function ResultCard({ result }) {
           >
             {result.prediction}
           </span>
+
+        </div>
+
+        {/* Model */}
+
+        <div className="mb-6 rounded-2xl bg-slate-800 p-5">
+
+          <p className="text-sm text-slate-400">
+            AI Model
+          </p>
+
+          <p className="mt-2 text-xl font-semibold text-white">
+            {result.model}
+          </p>
 
         </div>
 
@@ -60,11 +75,11 @@ export default function ResultCard({ result }) {
           <div className="rounded-2xl bg-slate-800 p-6">
 
             <p className="text-sm text-slate-400">
-              Risk Level
+              Prediction
             </p>
 
             <p className="mt-3 text-3xl font-bold text-white">
-              {result.risk_level}
+              {result.prediction}
             </p>
 
           </div>
@@ -72,11 +87,11 @@ export default function ResultCard({ result }) {
           <div className="rounded-2xl bg-slate-800 p-6">
 
             <p className="text-sm text-slate-400">
-              Processing Time
+              Confidence
             </p>
 
             <p className="mt-3 text-3xl font-bold text-white">
-              {result.processing_time_ms} ms
+              {result.confidence}%
             </p>
 
           </div>
@@ -84,6 +99,8 @@ export default function ResultCard({ result }) {
         </div>
 
       </div>
+
+      <ForensicReport forensics={result.forensics} />
 
       <ModelInfo />
 
