@@ -1,5 +1,7 @@
+import ConfidenceGauge from "./ConfidenceGauge";
 import ModelInfo from "./ModelInfo";
 import ForensicReport from "./ForensicReport";
+import PDFReportButton from "./PDFReportButton";
 
 export default function ResultCard({ result }) {
   if (!result) return null;
@@ -28,73 +30,66 @@ export default function ResultCard({ result }) {
 
         </div>
 
-        {/* Model */}
+        <div className="mb-8 grid gap-8 lg:grid-cols-2 lg:items-center">
 
-        <div className="mb-6 rounded-2xl bg-slate-800 p-5">
+          <div className="flex justify-center">
 
-          <p className="text-sm text-slate-400">
-            AI Model
-          </p>
-
-          <p className="mt-2 text-xl font-semibold text-white">
-            {result.model}
-          </p>
-
-        </div>
-
-        {/* Confidence */}
-
-        <div className="mb-8">
-
-          <div className="mb-3 flex justify-between text-white">
-            <span>Confidence</span>
-            <span>{result.confidence}%</span>
-          </div>
-
-          <div className="h-3 overflow-hidden rounded-full bg-slate-700">
-
-            <div
-              className={`h-full rounded-full transition-all duration-700 ${
-                isReal
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }`}
-              style={{
-                width: `${result.confidence}%`,
-              }}
+            <ConfidenceGauge
+              confidence={result.confidence}
+              prediction={result.prediction}
             />
 
           </div>
 
+          <div className="space-y-6">
+
+            <div className="rounded-2xl bg-slate-800 p-5">
+
+              <p className="text-sm text-slate-400">
+                AI Model
+              </p>
+
+              <p className="mt-2 text-xl font-semibold text-white">
+                {result.model}
+              </p>
+
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+
+              <div className="rounded-2xl bg-slate-800 p-5">
+
+                <p className="text-sm text-slate-400">
+                  Prediction
+                </p>
+
+                <p className="mt-2 text-2xl font-bold text-white">
+                  {result.prediction}
+                </p>
+
+              </div>
+
+              <div className="rounded-2xl bg-slate-800 p-5">
+
+                <p className="text-sm text-slate-400">
+                  Confidence
+                </p>
+
+                <p className="mt-2 text-2xl font-bold text-white">
+                  {result.confidence}%
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Metrics */}
+        <div className="mt-8 flex justify-center">
 
-        <div className="grid gap-6 md:grid-cols-2">
-
-          <div className="rounded-2xl bg-slate-800 p-6">
-
-            <p className="text-sm text-slate-400">
-              Prediction
-            </p>
-
-            <p className="mt-3 text-3xl font-bold text-white">
-              {result.prediction}
-            </p>
-
-          </div>
-
-          <div className="rounded-2xl bg-slate-800 p-6">
-
-            <p className="text-sm text-slate-400">
-              Confidence
-            </p>
-
-            <p className="mt-3 text-3xl font-bold text-white">
-              {result.confidence}%
-            </p>
-
-          </div>
+          <PDFReportButton result={result} />
 
         </div>
 

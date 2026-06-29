@@ -2,6 +2,8 @@ import { useState } from "react";
 import LoadingOverlay from "./LoadingOverlay";
 import ResultCard from "./ResultCard";
 import DropZone from "./DropZone";
+import AnalysisHistory from "./AnalysisHistory";
+import ImageComparison from "./ImageComparison";
 import usePrediction from "../hooks/usePrediction";
 
 export default function UploadSection() {
@@ -12,14 +14,15 @@ export default function UploadSection() {
     loading,
     result,
     error,
+    history,
     predict,
     reset,
+    clearHistory,
   } = usePrediction();
 
   function handleSelectFile(file) {
     if (!file) return;
 
-    // Accept only images
     if (!file.type.startsWith("image/")) {
       alert("Please select a valid image file.");
       return;
@@ -51,7 +54,7 @@ export default function UploadSection() {
         id="upload"
         className="bg-slate-950 px-6 py-24"
       >
-        <div className="mx-auto max-w-5xl rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur-xl">
+        <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur-xl">
 
           <h2 className="text-center text-4xl font-bold text-white">
             Try TruthLens AI
@@ -83,7 +86,20 @@ export default function UploadSection() {
               </div>
             )}
 
+            <ImageComparison preview={preview} />
+
             <ResultCard result={result} />
+
+            <AnalysisHistory history={history} />
+
+            {history.length > 0 && (
+              <button
+                onClick={clearHistory}
+                className="rounded-xl border border-red-500 px-6 py-3 text-red-400 transition hover:bg-red-500 hover:text-white"
+              >
+                Clear History
+              </button>
+            )}
 
           </div>
 

@@ -5,6 +5,7 @@ export default function usePrediction() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [history, setHistory] = useState([]);
 
   const predict = async (file) => {
     if (!file) {
@@ -25,8 +26,22 @@ export default function usePrediction() {
         },
       });
 
-      setResult(response.data);
-      return response.data;
+      const prediction = response.data;
+
+      setResult(prediction);
+
+      setHistory((prev) => [
+        {
+          file: file.name,
+          prediction: prediction.prediction,
+          confidence: prediction.confidence,
+          model: prediction.model,
+          timestamp: new Date().toLocaleString(),
+        },
+        ...prev,
+      ]);
+
+      return prediction;
     } catch (err) {
       console.error(err);
 
@@ -46,11 +61,17 @@ export default function usePrediction() {
     setError("");
   };
 
+  const clearHistory = () => {
+    setHistory([]);
+  };
+
   return {
     loading,
     result,
     error,
+    history,
     predict,
     reset,
+    clearHistory,
   };
 }
