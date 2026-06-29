@@ -45,42 +45,45 @@ class Trainer:
 
     def train_one_epoch(self):
 
-        self.model.train()
+     self.model.train()
 
-        running_loss = 0.0
+    running_loss = 0.0
 
-        progress_bar = tqdm(
-            self.train_loader,
-            desc="Training",
-            leave=False,
-        )
+    print("\n========== TRAINING STARTED ==========")
 
-        for images, labels in progress_bar:
+    for batch_idx, (images, labels) in enumerate(self.train_loader):
 
-            images = images.to(self.device)
-            labels = labels.to(self.device)
+        print(f"\nBatch {batch_idx}")
 
-            self.optimizer.zero_grad()
+        print("1. Moving images to GPU...")
+        images = images.to(self.device)
+        labels = labels.to(self.device)
 
-            outputs = self.model(images)
+        print("2. Zero gradients...")
+        self.optimizer.zero_grad()
 
-            loss = self.criterion(outputs, labels)
+        print("3. Forward pass...")
+        outputs = self.model(images)
 
-            loss.backward()
+        print("4. Computing loss...")
+        loss = self.criterion(outputs, labels)
 
-            self.optimizer.step()
+        print(f"Loss: {loss.item():.4f}")
 
-            running_loss += loss.item()
+        print("5. Backward pass...")
+        loss.backward()
 
-            progress_bar.set_postfix(
-                {
-                    "loss": f"{loss.item():.4f}"
-                }
-            )
+        print("6. Optimizer step...")
+        self.optimizer.step()
 
-        epoch_loss = running_loss / len(self.train_loader)
+        running_loss += loss.item()
 
-        return epoch_loss
+        print("✓ First batch completed successfully!")
+
+        # Stop after first batch
+        break
+
+    return running_loss
 
     # ---------------------------------------------------
     # Validation
