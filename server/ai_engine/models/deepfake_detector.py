@@ -4,9 +4,9 @@ from transformers import pipeline
 from ai_engine.models.base_detector import BaseDetector
 
 
-class CommunityDetector(BaseDetector):
+class DeepfakeDetector(BaseDetector):
     """
-    Community detector implementation.
+    Main AI deepfake detector used by TruthLens AI.
     """
 
     @property
@@ -33,12 +33,12 @@ class CommunityDetector(BaseDetector):
             key=lambda x: x["score"],
         )
 
-        label = best_prediction["label"]
+        label = best_prediction["label"].lower()
         confidence = round(best_prediction["score"] * 100, 2)
 
         prediction = (
             "FAKE"
-            if label.lower() == "deepfake"
+            if label == "deepfake"
             else "REAL"
         )
 
@@ -50,4 +50,4 @@ class CommunityDetector(BaseDetector):
         }
 
 
-community_detector = CommunityDetector()
+deepfake_detector = DeepfakeDetector()
