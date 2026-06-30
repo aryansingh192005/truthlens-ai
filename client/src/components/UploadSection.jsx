@@ -1,110 +1,53 @@
 import { useState } from "react";
-import LoadingOverlay from "./LoadingOverlay";
-import ResultCard from "./ResultCard";
-import DropZone from "./DropZone";
-import AnalysisHistory from "./AnalysisHistory";
-import ImageComparison from "./ImageComparison";
-import usePrediction from "../hooks/usePrediction";
+import FileUpload from "./FileUpload";
+import useAnalysis from "../hooks/useAnalysis";
+import AnalysisResult from "./AnalysisResult";
 
 export default function UploadSection() {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [file, setFile] = useState(null);
 
   const {
     loading,
     result,
     error,
-    history,
-    predict,
-    reset,
-    clearHistory,
-  } = usePrediction();
+    analyze,
+  } = useAnalysis();
 
-  function handleSelectFile(file) {
+  async function handleAnalyze() {
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      alert("Please select a valid image file.");
-      return;
-    }
-
-    setSelectedFile(file);
-    setPreview(URL.createObjectURL(file));
-    reset();
-  }
-
-  async function handleUpload() {
-    if (!selectedFile) {
-      alert("Please choose an image first.");
-      return;
-    }
-
-    try {
-      await predict(selectedFile);
-    } catch (err) {
-      console.error(err);
-    }
+    await analyze(file);
   }
 
   return (
-    <>
-      {loading && <LoadingOverlay />}
+    <section className="bg-slate-950 px-6 py-24">
+      <div className="mx-auto max-w-5xl">
 
-      <section
-        id="upload"
-        className="bg-slate-950 px-6 py-24"
-      >
-        <div className="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/5 p-10 backdrop-blur-xl">
+        <FileUpload onFileSelect={setFile} />
 
-          <h2 className="text-center text-4xl font-bold text-white">
-            Try TruthLens AI
-          </h2>
+        <div className="mt-8 flex justify-center">
 
-          <p className="mt-4 text-center text-slate-400">
-            Drag & drop an image or click below to upload and analyze it using AI.
-          </p>
-
-          <div className="mt-10 flex flex-col items-center gap-8">
-
-            <DropZone
-              preview={preview}
-              selectedFile={selectedFile}
-              onSelectFile={handleSelectFile}
-            />
-
-            <button
-              onClick={handleUpload}
-              disabled={loading || !selectedFile}
-              className="rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {loading ? "Analyzing..." : "Analyze Image"}
-            </button>
-
-            {error && (
-              <div className="w-full rounded-xl border border-red-500/30 bg-red-500/10 px-6 py-4 text-center text-red-400">
-                {error}
-              </div>
-            )}
-
-            <ImageComparison preview={preview} />
-
-            <ResultCard result={result} />
-
-            <AnalysisHistory history={history} />
-
-            {history.length > 0 && (
-              <button
-                onClick={clearHistory}
-                className="rounded-xl border border-red-500 px-6 py-3 text-red-400 transition hover:bg-red-500 hover:text-white"
-              >
-                Clear History
-              </button>
-            )}
-
-          </div>
+          <button
+            onClick={handleAnalyze}
+            disabled={!file || loading}
+            className="rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? "Analyzing..." : "Analyze Image"}
+          </button>
 
         </div>
-      </section>
-    </>
+
+        {error && (
+          <p className="mt-6 text-center text-red-400">
+            {error}
+          </p>
+        )}
+
+        {result && (
+          <AnalysisResult result={result} />
+        )}
+
+      </div>
+    </section>
   );
 }
