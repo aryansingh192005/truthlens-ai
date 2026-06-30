@@ -5,6 +5,7 @@ from app.services.inference import run_inference
 from app.services.face_detection import detect_faces
 from app.services.metadata_analysis import analyze_metadata
 from app.services.image_quality import analyze_image_quality
+from app.services.error_level_analysis import perform_ela
 
 router = APIRouter()
 
@@ -20,6 +21,8 @@ async def analyze_image(file: UploadFile = File(...)):
     metadata = analyze_metadata(str(image_path))
 
     quality = analyze_image_quality(str(image_path))
+
+    ela = perform_ela(str(image_path))
 
     label = prediction["label"].upper()
 
@@ -46,4 +49,7 @@ async def analyze_image(file: UploadFile = File(...)):
 
         "sharpness": quality["sharpness"],
         "brightness": quality["brightness"],
+
+        "ela_image": ela["ela_image"],
+        "ela_max_difference": ela["max_difference"],
     }
