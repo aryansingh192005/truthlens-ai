@@ -3,11 +3,13 @@ import Hero from "../components/Hero";
 import Statistics from "../components/Statistics";
 import Features from "../components/Features";
 import TechStack from "../components/TechStack";
+import SupportedFormats from "../components/SupportedFormats";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
+import Limitations from "../components/Limitations";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
@@ -27,6 +29,8 @@ export default function Home() {
 
         <TechStack />
 
+        <SupportedFormats />
+
         <HowItWorks />
 
         <CTA />
@@ -36,6 +40,8 @@ export default function Home() {
         <Testimonials />
 
         <FAQ />
+
+        <Limitations />
 
         <Contact />
       </main>
