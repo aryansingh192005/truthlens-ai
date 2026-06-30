@@ -16,6 +16,7 @@ import ProjectHighlights from "../components/ProjectHighlights";
 import LiveDemoSection from "../components/LiveDemoSection";
 import Achievements from "../components/Achievements";
 import ProjectImpact from "../components/ProjectImpact";
+import UseCases from "../components/UseCases";
 import TechTimeline from "../components/TechTimeline";
 import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
@@ -73,6 +74,8 @@ export default function Home() {
         <Achievements />
 
         <ProjectImpact />
+
+        <UseCases />
 
         <TechTimeline />
 
