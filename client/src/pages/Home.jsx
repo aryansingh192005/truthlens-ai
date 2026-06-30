@@ -25,6 +25,7 @@ import VersionHistory from "../components/VersionHistory";
 import FutureRoadmap from "../components/FutureRoadmap";
 import ResearchSection from "../components/ResearchSection";
 import OpenSourceSection from "../components/OpenSourceSection";
+import ProjectCredits from "../components/ProjectCredits";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
@@ -95,6 +96,8 @@ export default function Home() {
         <ResearchSection />
 
         <OpenSourceSection />
+
+        <ProjectCredits />
 
         <HowItWorks />
 
