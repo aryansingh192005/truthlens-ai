@@ -11,6 +11,7 @@ import DeploymentSection from "../components/DeploymentSection";
 import ModelComparison from "../components/ModelComparison";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectShowcase from "../components/ProjectShowcase";
+import ProjectGallery from "../components/ProjectGallery";
 import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
 import FutureRoadmap from "../components/FutureRoadmap";
@@ -57,6 +58,8 @@ export default function Home() {
         <ComparisonTable />
 
         <ProjectShowcase />
+
+        <ProjectGallery />
 
         <ProjectTimeline />
 
