@@ -4,12 +4,14 @@ import Statistics from "../components/Statistics";
 import Features from "../components/Features";
 import TechStack from "../components/TechStack";
 import HowItWorks from "../components/HowItWorks";
-import UploadSection from "../components/UploadSection";
 import CTA from "../components/CTA";
+import UploadSection from "../components/UploadSection";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import ScrollToTop from "../components/ScrollToTop";
+import CookieBanner from "../components/CookieBanner";
 
 export default function Home() {
   return (
@@ -39,6 +41,10 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      <ScrollToTop />
+
+      <CookieBanner />
     </div>
   );
 }
