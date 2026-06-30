@@ -8,6 +8,7 @@ import SupportedFormats from "../components/SupportedFormats";
 import ProjectStats from "../components/ProjectStats";
 import Architecture from "../components/Architecture";
 import DeploymentSection from "../components/DeploymentSection";
+import SecurityFeatures from "../components/SecurityFeatures";
 import ModelComparison from "../components/ModelComparison";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectShowcase from "../components/ProjectShowcase";
@@ -58,6 +59,8 @@ export default function Home() {
         <Architecture />
 
         <DeploymentSection />
+
+        <SecurityFeatures />
 
         <ModelComparison />
 
