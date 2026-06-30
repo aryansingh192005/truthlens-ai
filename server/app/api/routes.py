@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from fastapi import APIRouter, UploadFile, File
 
 from app.services.file_handler import save_upload
@@ -26,10 +28,9 @@ async def analyze_image(file: UploadFile = File(...)):
 
     label = prediction["label"].upper()
 
-    if "REAL" in label:
-        result = "REAL"
-    else:
-        result = "FAKE"
+    result = "REAL" if "REAL" in label else "FAKE"
+
+    ela_filename = Path(ela["ela_image"]).name
 
     return {
         "prediction": result,
@@ -50,6 +51,6 @@ async def analyze_image(file: UploadFile = File(...)):
         "sharpness": quality["sharpness"],
         "brightness": quality["brightness"],
 
-        "ela_image": ela["ela_image"],
+        "ela_image": f"http://127.0.0.1:8000/uploads/{ela_filename}",
         "ela_max_difference": ela["max_difference"],
     }
