@@ -26,6 +26,7 @@ import FutureRoadmap from "../components/FutureRoadmap";
 import ResearchSection from "../components/ResearchSection";
 import OpenSourceSection from "../components/OpenSourceSection";
 import ProjectCredits from "../components/ProjectCredits";
+import ProjectResources from "../components/ProjectResources";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
@@ -46,82 +47,46 @@ export default function Home() {
 
       <main>
         <Hero />
-
         <Statistics />
-
         <Features />
-
         <TechStack />
-
         <TechBadges />
-
         <PerformanceMetrics />
-
         <SupportedFormats />
-
         <ProjectStats />
-
         <Architecture />
-
         <DeploymentSection />
-
         <SecurityFeatures />
-
         <ModelComparison />
-
         <ComparisonTable />
-
         <ProjectShowcase />
-
         <ProjectGallery />
-
         <ProjectHighlights />
-
         <LiveDemoSection />
-
         <Achievements />
-
         <ProjectImpact />
-
         <UseCases />
-
         <TechTimeline />
-
         <ProjectTimeline />
-
         <VersionHistory />
-
         <FutureRoadmap />
-
         <ResearchSection />
-
         <OpenSourceSection />
-
         <ProjectCredits />
-
+        <ProjectResources />
         <HowItWorks />
-
         <CTA />
-
         <UploadSection />
-
         <Testimonials />
-
         <ProjectFAQ />
-
         <FAQ />
-
         <Limitations />
-
         <DeveloperSection />
-
         <Contact />
       </main>
 
       <Footer />
-
       <ScrollToTop />
-
       <CookieBanner />
     </div>
   );
