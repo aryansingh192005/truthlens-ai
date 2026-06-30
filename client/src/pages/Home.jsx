@@ -6,6 +6,7 @@ import TechStack from "../components/TechStack";
 import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import ProjectStats from "../components/ProjectStats";
+import Architecture from "../components/Architecture";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
@@ -41,6 +42,8 @@ export default function Home() {
         <SupportedFormats />
 
         <ProjectStats />
+
+        <Architecture />
 
         <ComparisonTable />
 
