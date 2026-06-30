@@ -13,6 +13,7 @@ import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
 import FutureRoadmap from "../components/FutureRoadmap";
 import ResearchSection from "../components/ResearchSection";
+import OpenSourceSection from "../components/OpenSourceSection";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
@@ -58,6 +59,8 @@ export default function Home() {
         <FutureRoadmap />
 
         <ResearchSection />
+
+        <OpenSourceSection />
 
         <HowItWorks />
 
