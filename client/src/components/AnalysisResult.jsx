@@ -5,13 +5,8 @@ import {
   BadgeCheck,
 } from "lucide-react";
 
-export default function AnalysisResult() {
-  const result = {
-    prediction: "REAL",
-    confidence: "96.8%",
-    model: "CommunityForensics ViT",
-    status: "Analysis Completed",
-  };
+export default function AnalysisResult({ result }) {
+  if (!result) return null;
 
   return (
     <section className="mt-12 rounded-3xl border border-white/10 bg-slate-900/70 p-8">
@@ -20,7 +15,11 @@ export default function AnalysisResult() {
 
         <ShieldCheck
           size={48}
-          className="text-green-400"
+          className={
+            result.prediction === "REAL"
+              ? "text-green-400"
+              : "text-red-400"
+          }
         />
 
         <div>
@@ -39,18 +38,34 @@ export default function AnalysisResult() {
 
       <div className="grid gap-6 md:grid-cols-2">
 
-        <div className="rounded-2xl border border-green-500/20 bg-green-500/10 p-6">
+        <div
+          className={`rounded-2xl p-6 ${
+            result.prediction === "REAL"
+              ? "border border-green-500/20 bg-green-500/10"
+              : "border border-red-500/20 bg-red-500/10"
+          }`}
+        >
 
           <BadgeCheck
             size={36}
-            className="text-green-400"
+            className={
+              result.prediction === "REAL"
+                ? "text-green-400"
+                : "text-red-400"
+            }
           />
 
           <h3 className="mt-4 text-xl font-semibold text-white">
             Prediction
           </h3>
 
-          <p className="mt-2 text-4xl font-bold text-green-400">
+          <p
+            className={`mt-2 text-4xl font-bold ${
+              result.prediction === "REAL"
+                ? "text-green-400"
+                : "text-red-400"
+            }`}
+          >
             {result.prediction}
           </p>
 
