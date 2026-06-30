@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Statistics from "../components/Statistics";
 import Features from "../components/Features";
 import TechStack from "../components/TechStack";
+import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
@@ -28,6 +29,8 @@ export default function Home() {
         <Features />
 
         <TechStack />
+
+        <PerformanceMetrics />
 
         <SupportedFormats />
 
