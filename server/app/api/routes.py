@@ -3,6 +3,7 @@ from fastapi import APIRouter, UploadFile, File
 from app.services.file_handler import save_upload
 from app.services.inference import run_inference
 from app.services.face_detection import detect_faces
+from app.services.metadata_analysis import analyze_metadata
 
 router = APIRouter()
 
@@ -14,6 +15,8 @@ async def analyze_image(file: UploadFile = File(...)):
     prediction = run_inference(str(image_path))
 
     face_result = detect_faces(str(image_path))
+
+    metadata = analyze_metadata(str(image_path))
 
     label = prediction["label"].upper()
 
@@ -28,6 +31,13 @@ async def analyze_image(file: UploadFile = File(...)):
         "model": "prithivMLmods/Deep-Fake-Detector-Model",
         "status": "Analysis Completed",
         "filename": file.filename,
+
         "face_count": face_result["face_count"],
         "faces_detected": face_result["faces_detected"],
+
+        "image_format": metadata["format"],
+        "image_width": metadata["width"],
+        "image_height": metadata["height"],
+        "color_mode": metadata["mode"],
+        "metadata_entries": metadata["metadata_entries"],
     }
