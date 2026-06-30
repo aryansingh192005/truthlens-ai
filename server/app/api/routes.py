@@ -4,6 +4,7 @@ from app.services.file_handler import save_upload
 from app.services.inference import run_inference
 from app.services.face_detection import detect_faces
 from app.services.metadata_analysis import analyze_metadata
+from app.services.image_quality import analyze_image_quality
 
 router = APIRouter()
 
@@ -17,6 +18,8 @@ async def analyze_image(file: UploadFile = File(...)):
     face_result = detect_faces(str(image_path))
 
     metadata = analyze_metadata(str(image_path))
+
+    quality = analyze_image_quality(str(image_path))
 
     label = prediction["label"].upper()
 
@@ -40,4 +43,7 @@ async def analyze_image(file: UploadFile = File(...)):
         "image_height": metadata["height"],
         "color_mode": metadata["mode"],
         "metadata_entries": metadata["metadata_entries"],
+
+        "sharpness": quality["sharpness"],
+        "brightness": quality["brightness"],
     }
