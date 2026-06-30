@@ -7,6 +7,7 @@ import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectTimeline from "../components/ProjectTimeline";
+import VersionHistory from "../components/VersionHistory";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
@@ -40,6 +41,8 @@ export default function Home() {
         <ComparisonTable />
 
         <ProjectTimeline />
+
+        <VersionHistory />
 
         <HowItWorks />
 
