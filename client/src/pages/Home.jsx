@@ -29,6 +29,7 @@ import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
 import Testimonials from "../components/Testimonials";
+import ProjectFAQ from "../components/ProjectFAQ";
 import FAQ from "../components/FAQ";
 import Limitations from "../components/Limitations";
 import DeveloperSection from "../components/DeveloperSection";
@@ -102,6 +103,8 @@ export default function Home() {
         <UploadSection />
 
         <Testimonials />
+
+        <ProjectFAQ />
 
         <FAQ />
 
