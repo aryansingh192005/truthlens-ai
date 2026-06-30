@@ -3,6 +3,7 @@ import Hero from "../components/Hero";
 import Statistics from "../components/Statistics";
 import Features from "../components/Features";
 import TechStack from "../components/TechStack";
+import TechBadges from "../components/TechBadges";
 import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import ProjectStats from "../components/ProjectStats";
@@ -49,6 +50,8 @@ export default function Home() {
         <Features />
 
         <TechStack />
+
+        <TechBadges />
 
         <PerformanceMetrics />
 
