@@ -12,6 +12,7 @@ import ModelComparison from "../components/ModelComparison";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectShowcase from "../components/ProjectShowcase";
 import ProjectGallery from "../components/ProjectGallery";
+import ProjectHighlights from "../components/ProjectHighlights";
 import Achievements from "../components/Achievements";
 import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
@@ -61,6 +62,8 @@ export default function Home() {
         <ProjectShowcase />
 
         <ProjectGallery />
+
+        <ProjectHighlights />
 
         <Achievements />
 
