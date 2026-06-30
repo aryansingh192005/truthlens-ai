@@ -1,4 +1,5 @@
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck, Github } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   return (
@@ -30,14 +31,33 @@ export default function Navbar() {
             Features
           </a>
 
+          <a href="#tech-stack" className="text-slate-300 hover:text-white transition">
+            Tech Stack
+          </a>
+
           <a href="#upload" className="text-slate-300 hover:text-white transition">
             Detect
           </a>
 
-          <a href="#about" className="text-slate-300 hover:text-white transition">
-            About
+          <a href="#contact" className="text-slate-300 hover:text-white transition">
+            Contact
           </a>
         </nav>
+
+        <div className="flex items-center gap-3">
+
+          <ThemeToggle />
+
+          <a
+            href="https://github.com/aryansingh192005/truthlens-ai"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xl border border-slate-700 p-2 text-slate-300 transition hover:border-blue-500 hover:text-white"
+          >
+            <Github size={20} />
+          </a>
+
+        </div>
 
       </div>
     </header>
