@@ -5,6 +5,7 @@ import Features from "../components/Features";
 import TechStack from "../components/TechStack";
 import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
+import ComparisonTable from "../components/ComparisonTable";
 import ProjectTimeline from "../components/ProjectTimeline";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
@@ -34,6 +35,8 @@ export default function Home() {
         <PerformanceMetrics />
 
         <SupportedFormats />
+
+        <ComparisonTable />
 
         <ProjectTimeline />
 
