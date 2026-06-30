@@ -13,6 +13,7 @@ import UploadSection from "../components/UploadSection";
 import Testimonials from "../components/Testimonials";
 import FAQ from "../components/FAQ";
 import Limitations from "../components/Limitations";
+import DeveloperSection from "../components/DeveloperSection";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ScrollToTop from "../components/ScrollToTop";
@@ -51,6 +52,8 @@ export default function Home() {
         <FAQ />
 
         <Limitations />
+
+        <DeveloperSection />
 
         <Contact />
       </main>
