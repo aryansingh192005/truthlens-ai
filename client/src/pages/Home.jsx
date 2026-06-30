@@ -7,10 +7,12 @@ import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import ProjectStats from "../components/ProjectStats";
 import Architecture from "../components/Architecture";
+import ModelComparison from "../components/ModelComparison";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectTimeline from "../components/ProjectTimeline";
 import VersionHistory from "../components/VersionHistory";
 import FutureRoadmap from "../components/FutureRoadmap";
+import ResearchSection from "../components/ResearchSection";
 import HowItWorks from "../components/HowItWorks";
 import CTA from "../components/CTA";
 import UploadSection from "../components/UploadSection";
@@ -45,6 +47,8 @@ export default function Home() {
 
         <Architecture />
 
+        <ModelComparison />
+
         <ComparisonTable />
 
         <ProjectTimeline />
@@ -52,6 +56,8 @@ export default function Home() {
         <VersionHistory />
 
         <FutureRoadmap />
+
+        <ResearchSection />
 
         <HowItWorks />
 
