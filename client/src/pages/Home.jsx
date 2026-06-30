@@ -7,6 +7,7 @@ import PerformanceMetrics from "../components/PerformanceMetrics";
 import SupportedFormats from "../components/SupportedFormats";
 import ProjectStats from "../components/ProjectStats";
 import Architecture from "../components/Architecture";
+import DeploymentSection from "../components/DeploymentSection";
 import ModelComparison from "../components/ModelComparison";
 import ComparisonTable from "../components/ComparisonTable";
 import ProjectTimeline from "../components/ProjectTimeline";
@@ -47,6 +48,8 @@ export default function Home() {
         <ProjectStats />
 
         <Architecture />
+
+        <DeploymentSection />
 
         <ModelComparison />
 
