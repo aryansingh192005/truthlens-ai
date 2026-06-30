@@ -3,6 +3,9 @@ import {
   AlertTriangle,
   BrainCircuit,
   BadgeCheck,
+  ScanFace,
+  Image,
+  Info,
 } from "lucide-react";
 
 export default function AnalysisResult({ result }) {
@@ -29,7 +32,7 @@ export default function AnalysisResult({ result }) {
           </h2>
 
           <p className="text-slate-400">
-            AI prediction and forensic summary.
+            AI prediction and complete forensic report.
           </p>
 
         </div>
@@ -121,6 +124,51 @@ export default function AnalysisResult({ result }) {
 
           <p className="mt-2 text-slate-300">
             {result.status}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+          <ScanFace className="mb-3 text-cyan-400" size={32} />
+          <h3 className="font-semibold text-white">Face Detection</h3>
+          <p className="mt-2 text-slate-300">
+            Faces Detected: {result.face_count}
+          </p>
+          <p className="text-slate-400">
+            {result.faces_detected ? "Yes" : "No"}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+          <Image className="mb-3 text-purple-400" size={32} />
+          <h3 className="font-semibold text-white">Image Metadata</h3>
+          <p className="mt-2 text-slate-300">
+            {result.image_width} × {result.image_height}
+          </p>
+          <p className="text-slate-400">
+            {result.image_format} • {result.color_mode}
+          </p>
+          <p className="text-slate-400">
+            EXIF Entries: {result.metadata_entries}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+          <Info className="mb-3 text-orange-400" size={32} />
+          <h3 className="font-semibold text-white">
+            Image Quality
+          </h3>
+
+          <p className="mt-2 text-slate-300">
+            Sharpness: {result.sharpness}
+          </p>
+
+          <p className="text-slate-300">
+            Brightness: {result.brightness}
           </p>
 
         </div>
