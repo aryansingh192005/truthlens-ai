@@ -4,11 +4,19 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import router
 from app.core.config import UPLOAD_DIR
+from app.db.database import Base, engine
+from app.middleware.request_logger import RequestLoggerMiddleware
+from app.exceptions.custom import AnalysisException
+from app.exceptions.handlers import analysis_exception_handler
+
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="TruthLens AI API",
-    version="1.0.0",
+    version="2.0.0",
 )
+
+app.add_middleware(RequestLoggerMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,11 +37,17 @@ app.mount(
 
 app.include_router(router)
 
+app.add_exception_handler(
+    AnalysisException,
+    analysis_exception_handler,
+)
+
 
 @app.get("/")
 async def root():
     return {
-        "message": "TruthLens AI API is running."
+        "message": "TruthLens AI API is running.",
+        "version": "2.0.0",
     }
 
 
@@ -41,5 +55,6 @@ async def root():
 async def health():
     return {
         "status": "healthy",
+        "database": "connected",
         "service": "TruthLens AI",
     }

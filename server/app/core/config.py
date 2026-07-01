@@ -1,4 +1,9 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
@@ -12,7 +17,14 @@ ALLOWED_EXTENSIONS = {
     ".png",
 }
 
-MAX_UPLOAD_SIZE_MB = 10
+MAX_UPLOAD_SIZE_MB = int(
+    os.getenv("MAX_UPLOAD_SIZE_MB", 10)
+)
+
+SECRET_KEY = os.getenv(
+    "SECRET_KEY",
+    "truthlens-dev-secret",
+)
 
 UPLOAD_DIR.mkdir(
     parents=True,
