@@ -8,6 +8,7 @@ from app.services.face_detection import detect_faces
 from app.services.metadata_analysis import analyze_metadata
 from app.services.image_quality import analyze_image_quality
 from app.services.error_level_analysis import perform_ela
+from app.services.noise_analysis import analyze_noise
 
 router = APIRouter()
 
@@ -17,17 +18,13 @@ async def analyze_image(file: UploadFile = File(...)):
     image_path = await save_upload(file)
 
     prediction = run_inference(str(image_path))
-
     face_result = detect_faces(str(image_path))
-
     metadata = analyze_metadata(str(image_path))
-
     quality = analyze_image_quality(str(image_path))
-
     ela = perform_ela(str(image_path))
+    noise = analyze_noise(str(image_path))
 
     label = prediction["label"].upper()
-
     result = "REAL" if "REAL" in label else "FAKE"
 
     ela_filename = Path(ela["ela_image"]).name
@@ -53,4 +50,6 @@ async def analyze_image(file: UploadFile = File(...)):
 
         "ela_image": f"http://127.0.0.1:8000/uploads/{ela_filename}",
         "ela_max_difference": ela["max_difference"],
+
+        "noise_level": noise["noise_level"],
     }

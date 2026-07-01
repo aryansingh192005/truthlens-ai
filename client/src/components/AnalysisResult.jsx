@@ -6,6 +6,7 @@ import {
   ScanFace,
   Image,
   Info,
+  Waves,
 } from "lucide-react";
 
 export default function AnalysisResult({ result }) {
@@ -126,7 +127,7 @@ export default function AnalysisResult({ result }) {
 
       </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
         <div className="rounded-2xl bg-slate-800 p-6">
 
@@ -191,6 +192,23 @@ export default function AnalysisResult({ result }) {
 
           <p className="text-slate-300">
             Brightness: {result.brightness}
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+
+          <Waves
+            className="mb-3 text-cyan-400"
+            size={32}
+          />
+
+          <h3 className="font-semibold text-white">
+            Noise Analysis
+          </h3>
+
+          <p className="mt-2 text-slate-300">
+            Noise Level: {result.noise_level}
           </p>
 
         </div>
