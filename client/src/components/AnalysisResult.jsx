@@ -7,6 +7,9 @@ import {
   Image,
   Info,
   Waves,
+  Palette,
+  Activity,
+  BarChart3,
 } from "lucide-react";
 
 export default function AnalysisResult({ result }) {
@@ -72,11 +75,7 @@ export default function AnalysisResult({ result }) {
         </div>
 
         <div className="rounded-2xl border border-blue-500/20 bg-blue-500/10 p-6">
-
-          <BrainCircuit
-            size={36}
-            className="text-blue-400"
-          />
+          <BrainCircuit size={36} className="text-blue-400" />
 
           <h3 className="mt-4 text-xl font-semibold text-white">
             Confidence
@@ -85,7 +84,6 @@ export default function AnalysisResult({ result }) {
           <p className="mt-2 text-4xl font-bold text-blue-400">
             {result.confidence}
           </p>
-
         </div>
 
       </div>
@@ -93,7 +91,6 @@ export default function AnalysisResult({ result }) {
       <div className="mt-8 grid gap-6 md:grid-cols-2">
 
         <div className="rounded-2xl border border-white/10 bg-slate-800 p-6">
-
           <h3 className="text-lg font-semibold text-white">
             AI Model
           </h3>
@@ -101,22 +98,16 @@ export default function AnalysisResult({ result }) {
           <p className="mt-2 text-slate-300">
             {result.model}
           </p>
-
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-slate-800 p-6">
 
           <div className="flex items-center gap-3">
-
-            <AlertTriangle
-              size={24}
-              className="text-yellow-400"
-            />
+            <AlertTriangle size={24} className="text-yellow-400" />
 
             <h3 className="text-lg font-semibold text-white">
               Status
             </h3>
-
           </div>
 
           <p className="mt-2 text-slate-300">
@@ -130,32 +121,25 @@ export default function AnalysisResult({ result }) {
       <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
         <div className="rounded-2xl bg-slate-800 p-6">
-
-          <ScanFace
-            className="mb-3 text-cyan-400"
-            size={32}
-          />
+          <ScanFace size={32} className="mb-3 text-cyan-400" />
 
           <h3 className="font-semibold text-white">
             Face Detection
           </h3>
 
           <p className="mt-2 text-slate-300">
-            Faces Detected: {result.face_count}
+            Faces: {result.face_count}
           </p>
 
           <p className="text-slate-400">
-            {result.faces_detected ? "Yes" : "No"}
+            {result.faces_detected ? "Detected" : "Not Detected"}
           </p>
 
         </div>
 
         <div className="rounded-2xl bg-slate-800 p-6">
 
-          <Image
-            className="mb-3 text-purple-400"
-            size={32}
-          />
+          <Image size={32} className="mb-3 text-purple-400" />
 
           <h3 className="font-semibold text-white">
             Image Metadata
@@ -166,21 +150,18 @@ export default function AnalysisResult({ result }) {
           </p>
 
           <p className="text-slate-400">
-            {result.image_format} • {result.color_mode}
+            {result.image_format}
           </p>
 
           <p className="text-slate-400">
-            EXIF Entries: {result.metadata_entries}
+            {result.color_mode}
           </p>
 
         </div>
 
         <div className="rounded-2xl bg-slate-800 p-6">
 
-          <Info
-            className="mb-3 text-orange-400"
-            size={32}
-          />
+          <Info size={32} className="mb-3 text-orange-400" />
 
           <h3 className="font-semibold text-white">
             Image Quality
@@ -198,10 +179,7 @@ export default function AnalysisResult({ result }) {
 
         <div className="rounded-2xl bg-slate-800 p-6">
 
-          <Waves
-            className="mb-3 text-cyan-400"
-            size={32}
-          />
+          <Waves size={32} className="mb-3 text-cyan-400" />
 
           <h3 className="font-semibold text-white">
             Noise Analysis
@@ -209,6 +187,60 @@ export default function AnalysisResult({ result }) {
 
           <p className="mt-2 text-slate-300">
             Noise Level: {result.noise_level}
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+
+          <Activity size={32} className="mb-3 text-red-400" />
+
+          <h3 className="font-semibold text-white">
+            Edge Analysis
+          </h3>
+
+          <p className="mt-2 text-slate-300">
+            Edge Pixels: {result.edge_pixels}
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+
+          <Palette size={32} className="mb-3 text-pink-400" />
+
+          <h3 className="font-semibold text-white">
+            Color Analysis
+          </h3>
+
+          <p className="mt-2 text-slate-300">
+            R: {result.mean_red}
+          </p>
+
+          <p className="text-slate-300">
+            G: {result.mean_green}
+          </p>
+
+          <p className="text-slate-300">
+            B: {result.mean_blue}
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl bg-slate-800 p-6">
+
+          <BarChart3 size={32} className="mb-3 text-green-400" />
+
+          <h3 className="font-semibold text-white">
+            Histogram
+          </h3>
+
+          <p className="mt-2 text-slate-300">
+            Mean: {result.histogram_mean}
+          </p>
+
+          <p className="text-slate-300">
+            Std: {result.histogram_std}
           </p>
 
         </div>

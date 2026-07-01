@@ -9,6 +9,9 @@ from app.services.metadata_analysis import analyze_metadata
 from app.services.image_quality import analyze_image_quality
 from app.services.error_level_analysis import perform_ela
 from app.services.noise_analysis import analyze_noise
+from app.services.edge_analysis import analyze_edges
+from app.services.color_analysis import analyze_colors
+from app.services.histogram_analysis import analyze_histogram
 
 router = APIRouter()
 
@@ -23,6 +26,9 @@ async def analyze_image(file: UploadFile = File(...)):
     quality = analyze_image_quality(str(image_path))
     ela = perform_ela(str(image_path))
     noise = analyze_noise(str(image_path))
+    edges = analyze_edges(str(image_path))
+    colors = analyze_colors(str(image_path))
+    histogram = analyze_histogram(str(image_path))
 
     label = prediction["label"].upper()
     result = "REAL" if "REAL" in label else "FAKE"
@@ -52,4 +58,13 @@ async def analyze_image(file: UploadFile = File(...)):
         "ela_max_difference": ela["max_difference"],
 
         "noise_level": noise["noise_level"],
+
+        "edge_pixels": edges["edge_pixels"],
+
+        "mean_red": colors["mean_red"],
+        "mean_green": colors["mean_green"],
+        "mean_blue": colors["mean_blue"],
+
+        "histogram_mean": histogram["histogram_mean"],
+        "histogram_std": histogram["histogram_std"],
     }
