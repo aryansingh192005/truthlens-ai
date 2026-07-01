@@ -1,0 +1,11 @@
+{
+    "report_id": "bd88250e07f2",
+    "generated_at": "2026-07-01T11:02:28.607271",
+    "prediction": "FAKE",
+    "confidence": "88.99%",
+    "risk_score": 25,
+    "risk_level": "Low",
+    "trust_score": 75,
+    "filename": "IMG_20250821_070614_216.jpg",
+    "ai_summary": "The uploaded image shows indicators commonly associated with manipulated media. Prediction confidence: 88.99%. Overall forensic risk score: 25/100."
+}

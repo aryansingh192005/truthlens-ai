@@ -3,12 +3,17 @@ import { ImageIcon, Video } from "lucide-react";
 import AIVisual from "./AIVisual";
 
 export default function Hero() {
+  function scrollToUpload() {
+    document.getElementById("upload")?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+
   return (
     <section
       id="home"
       className="relative overflow-hidden bg-slate-950 pt-24 pb-24"
     >
-      {/* Background Glow */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute left-[-150px] top-[-120px] h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
         <div className="absolute right-[-120px] bottom-[-120px] h-[450px] w-[450px] rounded-full bg-cyan-500/10 blur-3xl" />
@@ -16,7 +21,6 @@ export default function Hero() {
 
       <div className="relative mx-auto grid min-h-[85vh] max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
 
-        {/* Left Content */}
         <div className="max-w-2xl">
 
           <motion.h1
@@ -44,26 +48,27 @@ export default function Hero() {
             and security professionals.
           </motion.p>
 
-          {/* Buttons */}
-
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45 }}
             className="mt-12 flex flex-wrap gap-5"
           >
-            <button className="flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-lg shadow-blue-600/30 transition duration-300 hover:scale-105 hover:bg-blue-500">
+            <button
+              onClick={scrollToUpload}
+              className="flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 font-semibold text-white shadow-lg shadow-blue-600/30 transition duration-300 hover:scale-105 hover:bg-blue-500"
+            >
               <ImageIcon size={20} />
-              Upload Image
+              Analyze Image
             </button>
 
-            <button className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/50 px-8 py-4 font-semibold text-slate-200 transition duration-300 hover:scale-105 hover:border-blue-500 hover:bg-slate-900">
+            <button
+              className="flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/50 px-8 py-4 font-semibold text-slate-200 transition duration-300 hover:scale-105 hover:border-blue-500 hover:bg-slate-900"
+            >
               <Video size={20} />
-              Upload Video
+              Video Support Soon
             </button>
           </motion.div>
-
-          {/* Feature Pills */}
 
           <motion.div
             initial={{ opacity: 0 }}
@@ -73,7 +78,7 @@ export default function Hero() {
           >
             {[
               ["bg-green-400", "AI Powered"],
-              ["bg-cyan-400", "Image & Video"],
+              ["bg-cyan-400", "Image Analysis"],
               ["bg-blue-400", "Confidence Score"],
             ].map(([color, text]) => (
               <div
@@ -89,8 +94,6 @@ export default function Hero() {
           </motion.div>
 
         </div>
-
-        {/* Right Side */}
 
         <motion.div
           initial={{ opacity: 0, x: 40 }}

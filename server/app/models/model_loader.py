@@ -9,7 +9,8 @@ def load_model():
     if classifier is None:
         classifier = pipeline(
             task="image-classification",
-            model="prithivMLmods/Deep-Fake-Detector-Model",
+            model="prithivMLmods/deepfake-detector-model-v1",
+            device=-1,
         )
 
     return classifier

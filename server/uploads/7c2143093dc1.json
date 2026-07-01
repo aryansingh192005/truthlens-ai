@@ -1,0 +1,11 @@
+{
+    "report_id": "7c2143093dc1",
+    "generated_at": "2026-07-01T11:03:33.048435",
+    "prediction": "REAL",
+    "confidence": "71.98%",
+    "risk_score": 15,
+    "risk_level": "Low",
+    "trust_score": 85,
+    "filename": "Aadhar front.jpeg",
+    "ai_summary": "The uploaded image appears authentic based on the current AI model. Prediction confidence: 71.98%. Overall forensic risk score: 15/100."
+}

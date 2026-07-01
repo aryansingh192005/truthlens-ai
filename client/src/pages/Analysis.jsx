@@ -1,5 +1,4 @@
 import UploadSection from "../components/UploadSection";
-import AnalysisResult from "../components/AnalysisResult";
 
 export default function Analysis() {
   return (
@@ -15,14 +14,12 @@ export default function Analysis() {
 
           <p className="mt-4 text-lg text-slate-400">
             Upload an image to perform AI-powered deepfake detection,
-            metadata inspection, face detection, and forensic analysis.
+            metadata inspection, face detection and digital forensic analysis.
           </p>
 
         </div>
 
         <UploadSection />
-
-        <AnalysisResult />
 
       </div>
 

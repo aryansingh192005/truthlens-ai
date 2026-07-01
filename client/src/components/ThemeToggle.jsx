@@ -17,24 +17,29 @@ export default function ThemeToggle() {
   }, []);
 
   function toggleTheme() {
-    if (dark) {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("truthlens-theme", "light");
-      setDark(false);
-    } else {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("truthlens-theme", "dark");
-      setDark(true);
-    }
+    const next = !dark;
+
+    setDark(next);
+
+    document.documentElement.classList.toggle("dark", next);
+
+    localStorage.setItem(
+      "truthlens-theme",
+      next ? "dark" : "light"
+    );
   }
 
   return (
     <button
       onClick={toggleTheme}
-      className="rounded-xl border border-slate-700 p-2 text-slate-300 transition hover:border-blue-500 hover:text-white"
       aria-label="Toggle Theme"
+      className="rounded-xl border border-slate-700 p-2 transition hover:border-blue-500"
     >
-      {dark ? <Sun size={20} /> : <Moon size={20} />}
+      {dark ? (
+        <Sun className="text-yellow-400" size={20} />
+      ) : (
+        <Moon className="text-slate-700" size={20} />
+      )}
     </button>
   );
 }

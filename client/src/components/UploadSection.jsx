@@ -20,7 +20,10 @@ export default function UploadSection() {
   }
 
   return (
-    <section className="bg-slate-950 px-6 py-24">
+    <section
+      id="upload"
+      className="bg-slate-950 px-6 py-24"
+    >
       <div className="mx-auto max-w-5xl">
 
         <FileUpload onFileSelect={setFile} />
