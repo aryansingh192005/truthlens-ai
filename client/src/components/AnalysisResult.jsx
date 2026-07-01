@@ -10,6 +10,9 @@ import {
   Palette,
   Activity,
   BarChart3,
+  Focus,
+  HardDrive,
+  ShieldAlert,
 } from "lucide-react";
 
 export default function AnalysisResult({ result }) {
@@ -72,9 +75,11 @@ export default function AnalysisResult({ result }) {
           >
             {result.prediction}
           </p>
+
         </div>
 
         <div className="rounded-2xl border border-blue-500/20 bg-blue-500/10 p-6">
+
           <BrainCircuit size={36} className="text-blue-400" />
 
           <h3 className="mt-4 text-xl font-semibold text-white">
@@ -84,6 +89,7 @@ export default function AnalysisResult({ result }) {
           <p className="mt-2 text-4xl font-bold text-blue-400">
             {result.confidence}
           </p>
+
         </div>
 
       </div>
@@ -103,11 +109,16 @@ export default function AnalysisResult({ result }) {
         <div className="rounded-2xl border border-white/10 bg-slate-800 p-6">
 
           <div className="flex items-center gap-3">
-            <AlertTriangle size={24} className="text-yellow-400" />
+
+            <AlertTriangle
+              size={24}
+              className="text-yellow-400"
+            />
 
             <h3 className="text-lg font-semibold text-white">
               Status
             </h3>
+
           </div>
 
           <p className="mt-2 text-slate-300">
@@ -118,130 +129,65 @@ export default function AnalysisResult({ result }) {
 
       </div>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-10">
 
-        <div className="rounded-2xl bg-slate-800 p-6">
-          <ScanFace size={32} className="mb-3 text-cyan-400" />
+        <h3 className="mb-6 text-2xl font-bold text-white">
+          Forensic Analysis Dashboard
+        </h3>
 
-          <h3 className="font-semibold text-white">
-            Face Detection
-          </h3>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
 
-          <p className="mt-2 text-slate-300">
-            Faces: {result.face_count}
-          </p>
+          <Card icon={ScanFace} color="text-cyan-400" title="Face Detection">
+            <p>Faces: {result.face_count}</p>
+            <p>{result.faces_detected ? "Detected" : "Not Detected"}</p>
+          </Card>
 
-          <p className="text-slate-400">
-            {result.faces_detected ? "Detected" : "Not Detected"}
-          </p>
+          <Card icon={Image} color="text-purple-400" title="Metadata">
+            <p>{result.image_width} × {result.image_height}</p>
+            <p>{result.image_format}</p>
+            <p>{result.color_mode}</p>
+          </Card>
 
-        </div>
+          <Card icon={Info} color="text-orange-400" title="Image Quality">
+            <p>Sharpness: {result.sharpness}</p>
+            <p>Brightness: {result.brightness}</p>
+          </Card>
 
-        <div className="rounded-2xl bg-slate-800 p-6">
+          <Card icon={Waves} color="text-cyan-400" title="Noise Analysis">
+            <p>Noise: {result.noise_level}</p>
+          </Card>
 
-          <Image size={32} className="mb-3 text-purple-400" />
+          <Card icon={Activity} color="text-red-400" title="Edge Analysis">
+            <p>Edges: {result.edge_pixels}</p>
+          </Card>
 
-          <h3 className="font-semibold text-white">
-            Image Metadata
-          </h3>
+          <Card icon={Palette} color="text-pink-400" title="Color Analysis">
+            <p>R: {result.mean_red}</p>
+            <p>G: {result.mean_green}</p>
+            <p>B: {result.mean_blue}</p>
+          </Card>
 
-          <p className="mt-2 text-slate-300">
-            {result.image_width} × {result.image_height}
-          </p>
+          <Card icon={BarChart3} color="text-green-400" title="Histogram">
+            <p>Mean: {result.histogram_mean}</p>
+            <p>Std: {result.histogram_std}</p>
+          </Card>
 
-          <p className="text-slate-400">
-            {result.image_format}
-          </p>
+          <Card icon={Focus} color="text-blue-400" title="Blur Detection">
+            <p>Blur Score: {result.blur_score}</p>
+          </Card>
 
-          <p className="text-slate-400">
-            {result.color_mode}
-          </p>
+          <Card icon={HardDrive} color="text-yellow-400" title="Compression">
+            <p>{result.file_size_kb} KB</p>
+            <p>{result.extension}</p>
+          </Card>
 
-        </div>
+          <Card icon={ShieldAlert} color="text-red-500" title="Risk Score">
+            <p className="text-2xl font-bold">
+              {result.risk_score}/100
+            </p>
 
-        <div className="rounded-2xl bg-slate-800 p-6">
-
-          <Info size={32} className="mb-3 text-orange-400" />
-
-          <h3 className="font-semibold text-white">
-            Image Quality
-          </h3>
-
-          <p className="mt-2 text-slate-300">
-            Sharpness: {result.sharpness}
-          </p>
-
-          <p className="text-slate-300">
-            Brightness: {result.brightness}
-          </p>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-800 p-6">
-
-          <Waves size={32} className="mb-3 text-cyan-400" />
-
-          <h3 className="font-semibold text-white">
-            Noise Analysis
-          </h3>
-
-          <p className="mt-2 text-slate-300">
-            Noise Level: {result.noise_level}
-          </p>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-800 p-6">
-
-          <Activity size={32} className="mb-3 text-red-400" />
-
-          <h3 className="font-semibold text-white">
-            Edge Analysis
-          </h3>
-
-          <p className="mt-2 text-slate-300">
-            Edge Pixels: {result.edge_pixels}
-          </p>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-800 p-6">
-
-          <Palette size={32} className="mb-3 text-pink-400" />
-
-          <h3 className="font-semibold text-white">
-            Color Analysis
-          </h3>
-
-          <p className="mt-2 text-slate-300">
-            R: {result.mean_red}
-          </p>
-
-          <p className="text-slate-300">
-            G: {result.mean_green}
-          </p>
-
-          <p className="text-slate-300">
-            B: {result.mean_blue}
-          </p>
-
-        </div>
-
-        <div className="rounded-2xl bg-slate-800 p-6">
-
-          <BarChart3 size={32} className="mb-3 text-green-400" />
-
-          <h3 className="font-semibold text-white">
-            Histogram
-          </h3>
-
-          <p className="mt-2 text-slate-300">
-            Mean: {result.histogram_mean}
-          </p>
-
-          <p className="text-slate-300">
-            Std: {result.histogram_std}
-          </p>
+            <p>{result.risk_level} Risk</p>
+          </Card>
 
         </div>
 
@@ -270,5 +216,21 @@ export default function AnalysisResult({ result }) {
       )}
 
     </section>
+  );
+}
+
+function Card({ icon: Icon, color, title, children }) {
+  return (
+    <div className="rounded-2xl bg-slate-800 p-6">
+      <Icon size={32} className={`mb-3 ${color}`} />
+
+      <h3 className="mb-3 font-semibold text-white">
+        {title}
+      </h3>
+
+      <div className="space-y-1 text-slate-300">
+        {children}
+      </div>
+    </div>
   );
 }

@@ -12,6 +12,9 @@ from app.services.noise_analysis import analyze_noise
 from app.services.edge_analysis import analyze_edges
 from app.services.color_analysis import analyze_colors
 from app.services.histogram_analysis import analyze_histogram
+from app.services.blur_analysis import analyze_blur
+from app.services.compression_analysis import analyze_compression
+from app.services.risk_assessment import calculate_risk
 
 router = APIRouter()
 
@@ -29,6 +32,18 @@ async def analyze_image(file: UploadFile = File(...)):
     edges = analyze_edges(str(image_path))
     colors = analyze_colors(str(image_path))
     histogram = analyze_histogram(str(image_path))
+    blur = analyze_blur(str(image_path))
+    compression = analyze_compression(str(image_path))
+
+    confidence = prediction["confidence"]
+
+    risk = calculate_risk(
+        confidence,
+        noise["noise_level"],
+        quality["sharpness"],
+        face_result["face_count"],
+        metadata["metadata_entries"],
+    )
 
     label = prediction["label"].upper()
     result = "REAL" if "REAL" in label else "FAKE"
@@ -37,7 +52,7 @@ async def analyze_image(file: UploadFile = File(...)):
 
     return {
         "prediction": result,
-        "confidence": f"{prediction['confidence']}%",
+        "confidence": f"{confidence}%",
         "model": "prithivMLmods/Deep-Fake-Detector-Model",
         "status": "Analysis Completed",
         "filename": file.filename,
@@ -67,4 +82,12 @@ async def analyze_image(file: UploadFile = File(...)):
 
         "histogram_mean": histogram["histogram_mean"],
         "histogram_std": histogram["histogram_std"],
+
+        "blur_score": blur["blur_score"],
+
+        "file_size_kb": compression["file_size_kb"],
+        "extension": compression["extension"],
+
+        "risk_score": risk["risk_score"],
+        "risk_level": risk["risk_level"],
     }
