@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from app.core.config import BASE_URL
 from app.services.inference import run_inference
 from app.services.face_detection import detect_faces
 from app.services.metadata_analysis import analyze_metadata
@@ -45,7 +46,7 @@ def analyze_image_pipeline(image_path: str, filename: str):
     analysis = {
         "prediction": result,
         "confidence": f"{confidence}%",
-        "model": "prithivMLmods/Deep-Fake-Detector-Model",
+        "model": "prithivMLmods/deepfake-detector-model-v1",
         "status": "Analysis Completed",
         "filename": filename,
 
@@ -80,7 +81,7 @@ def analyze_image_pipeline(image_path: str, filename: str):
         "risk_score": risk["risk_score"],
         "risk_level": risk["risk_level"],
 
-        "ela_image": f"http://127.0.0.1:8000/uploads/{ela_filename}",
+        "ela_image": f"{BASE_URL}/uploads/{ela_filename}",
         "ela_max_difference": ela["max_difference"],
     }
 

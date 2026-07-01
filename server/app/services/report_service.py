@@ -1,17 +1,14 @@
 import json
 import uuid
 from datetime import datetime
-from pathlib import Path
 
-from app.core.config import UPLOAD_DIR
+from app.core.config import BASE_URL, UPLOAD_DIR
 
 
 def build_summary(result: dict):
     prediction = result["prediction"]
 
-    confidence = float(
-        result["confidence"].replace("%", "")
-    )
+    confidence = float(result["confidence"].replace("%", ""))
 
     risk = result["risk_score"]
 
@@ -50,25 +47,13 @@ def create_report(result: dict):
         "ai_summary": build_summary(result),
     }
 
-    report_path = (
-        UPLOAD_DIR /
-        f"{report_id}.json"
-    )
+    report_path = UPLOAD_DIR / f"{report_id}.json"
 
-    with open(
-        report_path,
-        "w",
-        encoding="utf-8",
-    ) as file:
-        json.dump(
-            report,
-            file,
-            indent=4,
-        )
+    with open(report_path, "w", encoding="utf-8") as file:
+        json.dump(report, file, indent=4)
 
     report["report_url"] = (
-        f"http://127.0.0.1:8000/uploads/"
-        f"{report_path.name}"
+        f"{BASE_URL}/uploads/{report_path.name}"
     )
 
     return report
