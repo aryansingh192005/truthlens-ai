@@ -1,93 +1,38 @@
-from pathlib import Path
+from fastapi import APIRouter, UploadFile, File, HTTPException
 
-from fastapi import APIRouter, UploadFile, File
-
+from app.core.logger import logger
+from app.schemas.analysis import AnalysisResponse
+from app.services.analysis_pipeline import analyze_image_pipeline
 from app.services.file_handler import save_upload
-from app.services.inference import run_inference
-from app.services.face_detection import detect_faces
-from app.services.metadata_analysis import analyze_metadata
-from app.services.image_quality import analyze_image_quality
-from app.services.error_level_analysis import perform_ela
-from app.services.noise_analysis import analyze_noise
-from app.services.edge_analysis import analyze_edges
-from app.services.color_analysis import analyze_colors
-from app.services.histogram_analysis import analyze_histogram
-from app.services.blur_analysis import analyze_blur
-from app.services.compression_analysis import analyze_compression
-from app.services.risk_assessment import calculate_risk
 
 router = APIRouter()
 
 
-@router.post("/analyze")
-async def analyze_image(file: UploadFile = File(...)):
-    image_path = await save_upload(file)
+@router.post(
+    "/analyze",
+    response_model=AnalysisResponse,
+)
+async def analyze_image(
+    file: UploadFile = File(...)
+):
+    try:
+        logger.info(f"Received file: {file.filename}")
 
-    prediction = run_inference(str(image_path))
-    face_result = detect_faces(str(image_path))
-    metadata = analyze_metadata(str(image_path))
-    quality = analyze_image_quality(str(image_path))
-    ela = perform_ela(str(image_path))
-    noise = analyze_noise(str(image_path))
-    edges = analyze_edges(str(image_path))
-    colors = analyze_colors(str(image_path))
-    histogram = analyze_histogram(str(image_path))
-    blur = analyze_blur(str(image_path))
-    compression = analyze_compression(str(image_path))
+        image_path = await save_upload(file)
 
-    confidence = prediction["confidence"]
+        result = analyze_image_pipeline(
+            str(image_path),
+            file.filename,
+        )
 
-    risk = calculate_risk(
-        confidence,
-        noise["noise_level"],
-        quality["sharpness"],
-        face_result["face_count"],
-        metadata["metadata_entries"],
-    )
+        logger.info("Analysis completed successfully.")
 
-    label = prediction["label"].upper()
-    result = "REAL" if "REAL" in label else "FAKE"
+        return result
 
-    ela_filename = Path(ela["ela_image"]).name
+    except Exception as e:
+        logger.exception("Analysis failed.")
 
-    return {
-        "prediction": result,
-        "confidence": f"{confidence}%",
-        "model": "prithivMLmods/Deep-Fake-Detector-Model",
-        "status": "Analysis Completed",
-        "filename": file.filename,
-
-        "face_count": face_result["face_count"],
-        "faces_detected": face_result["faces_detected"],
-
-        "image_format": metadata["format"],
-        "image_width": metadata["width"],
-        "image_height": metadata["height"],
-        "color_mode": metadata["mode"],
-        "metadata_entries": metadata["metadata_entries"],
-
-        "sharpness": quality["sharpness"],
-        "brightness": quality["brightness"],
-
-        "ela_image": f"http://127.0.0.1:8000/uploads/{ela_filename}",
-        "ela_max_difference": ela["max_difference"],
-
-        "noise_level": noise["noise_level"],
-
-        "edge_pixels": edges["edge_pixels"],
-
-        "mean_red": colors["mean_red"],
-        "mean_green": colors["mean_green"],
-        "mean_blue": colors["mean_blue"],
-
-        "histogram_mean": histogram["histogram_mean"],
-        "histogram_std": histogram["histogram_std"],
-
-        "blur_score": blur["blur_score"],
-
-        "file_size_kb": compression["file_size_kb"],
-        "extension": compression["extension"],
-
-        "risk_score": risk["risk_score"],
-        "risk_level": risk["risk_level"],
-    }
+        raise HTTPException(
+            status_code=500,
+            detail=str(e),
+        )

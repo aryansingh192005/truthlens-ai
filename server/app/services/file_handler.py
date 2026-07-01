@@ -1,4 +1,5 @@
 import shutil
+import uuid
 from pathlib import Path
 
 from fastapi import UploadFile
@@ -7,9 +8,13 @@ from app.core.config import UPLOAD_DIR
 
 
 async def save_upload(file: UploadFile) -> Path:
-    file_path = UPLOAD_DIR / file.filename
+    extension = Path(file.filename).suffix
 
-    with open(file_path, "wb") as buffer:
+    filename = f"{uuid.uuid4().hex}{extension}"
+
+    destination = UPLOAD_DIR / filename
+
+    with open(destination, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    return file_path
+    return destination

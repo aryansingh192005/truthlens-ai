@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.api.routes import router
+from app.core.config import UPLOAD_DIR
 
-app = FastAPI(title="TruthLens AI API")
+app = FastAPI(
+    title="TruthLens AI API",
+    version="1.0.0",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -16,10 +21,25 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount(
+    "/uploads",
+    StaticFiles(directory=UPLOAD_DIR),
+    name="uploads",
+)
+
 app.include_router(router)
 
+
 @app.get("/")
-def root():
+async def root():
     return {
         "message": "TruthLens AI API is running."
+    }
+
+
+@app.get("/health")
+async def health():
+    return {
+        "status": "healthy",
+        "service": "TruthLens AI",
     }
