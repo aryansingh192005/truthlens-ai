@@ -26,7 +26,6 @@ export default function AnalysisResult({ result }) {
         />
 
         <div>
-
           <h2 className="text-3xl font-bold text-white">
             Analysis Result
           </h2>
@@ -34,7 +33,6 @@ export default function AnalysisResult({ result }) {
           <p className="text-slate-400">
             AI prediction and complete forensic report.
           </p>
-
         </div>
 
       </div>
@@ -48,7 +46,6 @@ export default function AnalysisResult({ result }) {
               : "border border-red-500/20 bg-red-500/10"
           }`}
         >
-
           <BadgeCheck
             size={36}
             className={
@@ -71,7 +68,6 @@ export default function AnalysisResult({ result }) {
           >
             {result.prediction}
           </p>
-
         </div>
 
         <div className="rounded-2xl border border-blue-500/20 bg-blue-500/10 p-6">
@@ -133,32 +129,58 @@ export default function AnalysisResult({ result }) {
       <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
 
         <div className="rounded-2xl bg-slate-800 p-6">
-          <ScanFace className="mb-3 text-cyan-400" size={32} />
-          <h3 className="font-semibold text-white">Face Detection</h3>
+
+          <ScanFace
+            className="mb-3 text-cyan-400"
+            size={32}
+          />
+
+          <h3 className="font-semibold text-white">
+            Face Detection
+          </h3>
+
           <p className="mt-2 text-slate-300">
             Faces Detected: {result.face_count}
           </p>
+
           <p className="text-slate-400">
             {result.faces_detected ? "Yes" : "No"}
           </p>
+
         </div>
 
         <div className="rounded-2xl bg-slate-800 p-6">
-          <Image className="mb-3 text-purple-400" size={32} />
-          <h3 className="font-semibold text-white">Image Metadata</h3>
+
+          <Image
+            className="mb-3 text-purple-400"
+            size={32}
+          />
+
+          <h3 className="font-semibold text-white">
+            Image Metadata
+          </h3>
+
           <p className="mt-2 text-slate-300">
             {result.image_width} × {result.image_height}
           </p>
+
           <p className="text-slate-400">
             {result.image_format} • {result.color_mode}
           </p>
+
           <p className="text-slate-400">
             EXIF Entries: {result.metadata_entries}
           </p>
+
         </div>
 
         <div className="rounded-2xl bg-slate-800 p-6">
-          <Info className="mb-3 text-orange-400" size={32} />
+
+          <Info
+            className="mb-3 text-orange-400"
+            size={32}
+          />
+
           <h3 className="font-semibold text-white">
             Image Quality
           </h3>
@@ -174,6 +196,28 @@ export default function AnalysisResult({ result }) {
         </div>
 
       </div>
+
+      {result.ela_image && (
+
+        <div className="mt-10 rounded-3xl border border-white/10 bg-slate-800 p-8">
+
+          <h3 className="mb-6 text-2xl font-bold text-white">
+            Error Level Analysis (ELA)
+          </h3>
+
+          <img
+            src={result.ela_image}
+            alt="ELA Output"
+            className="mx-auto rounded-2xl border border-white/10"
+          />
+
+          <p className="mt-6 text-center text-slate-300">
+            Maximum Difference: {result.ela_max_difference}
+          </p>
+
+        </div>
+
+      )}
 
     </section>
   );
