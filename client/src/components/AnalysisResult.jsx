@@ -1,92 +1,49 @@
+import VerdictBanner from "./VerdictBanner";
+import RiskGauge from "./RiskGauge";
+import TrustScore from "./TrustScore";
+import ImageComparison from "./ImageComparison";
+import AnalysisSummary from "./AnalysisSummary";
+import ReportActions from "./ReportActions";
+
 import {
-  ShieldCheck,
-  AlertTriangle,
   BrainCircuit,
-  BadgeCheck,
   ScanFace,
   Image,
-  Info,
-  Waves,
-  Palette,
   Activity,
+  Palette,
   BarChart3,
+  Waves,
   Focus,
   HardDrive,
-  ShieldAlert,
 } from "lucide-react";
 
 export default function AnalysisResult({ result }) {
   if (!result) return null;
 
   return (
-    <section className="mt-12 rounded-3xl border border-white/10 bg-slate-900/70 p-8">
+    <section className="mt-12 space-y-8">
 
-      <div className="mb-10 flex items-center gap-4">
+      <VerdictBanner result={result} />
 
-        <ShieldCheck
-          size={48}
-          className={
-            result.prediction === "REAL"
-              ? "text-green-400"
-              : "text-red-400"
-          }
-        />
+      <div className="grid gap-6 lg:grid-cols-3">
 
-        <div>
-          <h2 className="text-3xl font-bold text-white">
-            Analysis Result
-          </h2>
+        <RiskGauge score={result.risk_score} />
 
-          <p className="text-slate-400">
-            AI prediction and complete forensic report.
-          </p>
-        </div>
+        <TrustScore result={result} />
 
-      </div>
+        <div className="rounded-3xl bg-slate-800 p-8">
 
-      <div className="grid gap-6 md:grid-cols-2">
+          <BrainCircuit size={40} className="text-blue-400" />
 
-        <div
-          className={`rounded-2xl p-6 ${
-            result.prediction === "REAL"
-              ? "border border-green-500/20 bg-green-500/10"
-              : "border border-red-500/20 bg-red-500/10"
-          }`}
-        >
-          <BadgeCheck
-            size={36}
-            className={
-              result.prediction === "REAL"
-                ? "text-green-400"
-                : "text-red-400"
-            }
-          />
-
-          <h3 className="mt-4 text-xl font-semibold text-white">
-            Prediction
+          <h3 className="mt-4 text-xl font-bold text-white">
+            AI Model
           </h3>
 
-          <p
-            className={`mt-2 text-4xl font-bold ${
-              result.prediction === "REAL"
-                ? "text-green-400"
-                : "text-red-400"
-            }`}
-          >
-            {result.prediction}
+          <p className="mt-3 text-slate-300">
+            {result.model}
           </p>
 
-        </div>
-
-        <div className="rounded-2xl border border-blue-500/20 bg-blue-500/10 p-6">
-
-          <BrainCircuit size={36} className="text-blue-400" />
-
-          <h3 className="mt-4 text-xl font-semibold text-white">
-            Confidence
-          </h3>
-
-          <p className="mt-2 text-4xl font-bold text-blue-400">
+          <p className="mt-5 text-4xl font-bold text-blue-400">
             {result.confidence}
           </p>
 
@@ -94,143 +51,58 @@ export default function AnalysisResult({ result }) {
 
       </div>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-5">
 
-        <div className="rounded-2xl border border-white/10 bg-slate-800 p-6">
-          <h3 className="text-lg font-semibold text-white">
-            AI Model
-          </h3>
+        <MetricCard icon={ScanFace} title="Faces" value={result.face_count} subtitle={result.faces_detected ? "Detected" : "Not Detected"} color="text-cyan-400" />
 
-          <p className="mt-2 text-slate-300">
-            {result.model}
-          </p>
-        </div>
+        <MetricCard icon={Image} title="Metadata" value={`${result.image_width} × ${result.image_height}`} subtitle={result.image_format} color="text-purple-400" />
 
-        <div className="rounded-2xl border border-white/10 bg-slate-800 p-6">
+        <MetricCard icon={Activity} title="Sharpness" value={result.sharpness} subtitle={`Brightness ${result.brightness}`} color="text-orange-400" />
 
-          <div className="flex items-center gap-3">
+        <MetricCard icon={Waves} title="Noise" value={result.noise_level} subtitle="Noise Level" color="text-cyan-400" />
 
-            <AlertTriangle
-              size={24}
-              className="text-yellow-400"
-            />
+        <MetricCard icon={Focus} title="Blur" value={result.blur_score} subtitle="Variance" color="text-blue-400" />
 
-            <h3 className="text-lg font-semibold text-white">
-              Status
-            </h3>
+        <MetricCard icon={Palette} title="RGB" value={`R ${result.mean_red}`} subtitle={`G ${result.mean_green} • B ${result.mean_blue}`} color="text-pink-400" />
 
-          </div>
+        <MetricCard icon={BarChart3} title="Histogram" value={result.histogram_mean} subtitle={`Std ${result.histogram_std}`} color="text-green-400" />
 
-          <p className="mt-2 text-slate-300">
-            {result.status}
-          </p>
+        <MetricCard icon={Activity} title="Edges" value={result.edge_pixels} subtitle="Detected" color="text-red-400" />
 
-        </div>
+        <MetricCard icon={HardDrive} title="File Size" value={`${result.file_size_kb} KB`} subtitle={result.extension} color="text-yellow-400" />
+
+        <MetricCard icon={BrainCircuit} title="Status" value={result.status} subtitle={result.prediction} color="text-indigo-400" />
 
       </div>
 
-      <div className="mt-10">
+      <AnalysisSummary result={result} />
 
-        <h3 className="mb-6 text-2xl font-bold text-white">
-          Forensic Analysis Dashboard
-        </h3>
+      <ReportActions result={result} />
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-          <Card icon={ScanFace} color="text-cyan-400" title="Face Detection">
-            <p>Faces: {result.face_count}</p>
-            <p>{result.faces_detected ? "Detected" : "Not Detected"}</p>
-          </Card>
-
-          <Card icon={Image} color="text-purple-400" title="Metadata">
-            <p>{result.image_width} × {result.image_height}</p>
-            <p>{result.image_format}</p>
-            <p>{result.color_mode}</p>
-          </Card>
-
-          <Card icon={Info} color="text-orange-400" title="Image Quality">
-            <p>Sharpness: {result.sharpness}</p>
-            <p>Brightness: {result.brightness}</p>
-          </Card>
-
-          <Card icon={Waves} color="text-cyan-400" title="Noise Analysis">
-            <p>Noise: {result.noise_level}</p>
-          </Card>
-
-          <Card icon={Activity} color="text-red-400" title="Edge Analysis">
-            <p>Edges: {result.edge_pixels}</p>
-          </Card>
-
-          <Card icon={Palette} color="text-pink-400" title="Color Analysis">
-            <p>R: {result.mean_red}</p>
-            <p>G: {result.mean_green}</p>
-            <p>B: {result.mean_blue}</p>
-          </Card>
-
-          <Card icon={BarChart3} color="text-green-400" title="Histogram">
-            <p>Mean: {result.histogram_mean}</p>
-            <p>Std: {result.histogram_std}</p>
-          </Card>
-
-          <Card icon={Focus} color="text-blue-400" title="Blur Detection">
-            <p>Blur Score: {result.blur_score}</p>
-          </Card>
-
-          <Card icon={HardDrive} color="text-yellow-400" title="Compression">
-            <p>{result.file_size_kb} KB</p>
-            <p>{result.extension}</p>
-          </Card>
-
-          <Card icon={ShieldAlert} color="text-red-500" title="Risk Score">
-            <p className="text-2xl font-bold">
-              {result.risk_score}/100
-            </p>
-
-            <p>{result.risk_level} Risk</p>
-          </Card>
-
-        </div>
-
-      </div>
-
-      {result.ela_image && (
-
-        <div className="mt-10 rounded-3xl border border-white/10 bg-slate-800 p-8">
-
-          <h3 className="mb-6 text-2xl font-bold text-white">
-            Error Level Analysis (ELA)
-          </h3>
-
-          <img
-            src={result.ela_image}
-            alt="ELA Output"
-            className="mx-auto rounded-2xl border border-white/10"
-          />
-
-          <p className="mt-6 text-center text-slate-300">
-            Maximum Difference: {result.ela_max_difference}
-          </p>
-
-        </div>
-
-      )}
+      <ImageComparison result={result} />
 
     </section>
   );
 }
 
-function Card({ icon: Icon, color, title, children }) {
+function MetricCard({ icon: Icon, title, value, subtitle, color }) {
   return (
-    <div className="rounded-2xl bg-slate-800 p-6">
-      <Icon size={32} className={`mb-3 ${color}`} />
+    <div className="rounded-3xl bg-slate-800 p-6">
 
-      <h3 className="mb-3 font-semibold text-white">
+      <Icon size={30} className={color} />
+
+      <h3 className="mt-4 font-semibold text-white">
         {title}
       </h3>
 
-      <div className="space-y-1 text-slate-300">
-        {children}
-      </div>
+      <p className="mt-3 text-2xl font-bold text-white">
+        {value}
+      </p>
+
+      <p className="mt-2 text-sm text-slate-400">
+        {subtitle}
+      </p>
+
     </div>
   );
 }

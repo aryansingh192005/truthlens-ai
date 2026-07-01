@@ -1,0 +1,11 @@
+{
+    "report_id": "259fa96f286e",
+    "generated_at": "2026-07-01T04:49:44.619697",
+    "prediction": "REAL",
+    "confidence": "89.78%",
+    "risk_score": 20,
+    "risk_level": "Low",
+    "trust_score": 80,
+    "filename": "cat image.webp",
+    "ai_summary": "The uploaded image appears authentic based on the current AI model. Prediction confidence: 89.78%. Overall forensic risk score: 20/100."
+}

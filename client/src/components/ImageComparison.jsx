@@ -1,20 +1,44 @@
-export default function ImageComparison({ preview }) {
-  if (!preview) return null;
+export default function ImageComparison({ result }) {
+  if (!result?.ela_image) return null;
 
   return (
-    <div className="mt-10 rounded-3xl border border-white/10 bg-slate-900/70 p-8 backdrop-blur-xl">
+    <div className="rounded-3xl bg-slate-800 p-8">
 
-      <h2 className="mb-8 text-3xl font-bold text-white">
-        Uploaded Image
-      </h2>
+      <h3 className="mb-8 text-2xl font-bold text-white">
+        Error Level Analysis
+      </h3>
 
-      <div className="flex justify-center">
+      <div className="grid gap-8 lg:grid-cols-2">
 
-        <img
-          src={preview}
-          alt="Uploaded"
-          className="max-h-[500px] w-auto rounded-2xl border border-slate-700 object-contain shadow-xl"
-        />
+        <div>
+
+          <h4 className="mb-4 text-center text-lg font-semibold text-white">
+            ELA Output
+          </h4>
+
+          <img
+            src={result.ela_image}
+            alt="ELA"
+            className="rounded-2xl border border-white/10"
+          />
+
+        </div>
+
+        <div className="flex items-center justify-center rounded-2xl border border-dashed border-slate-700">
+
+          <div className="text-center">
+
+            <h4 className="text-lg font-semibold text-white">
+              Maximum Difference
+            </h4>
+
+            <p className="mt-3 text-4xl font-bold text-orange-400">
+              {result.ela_max_difference}
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 

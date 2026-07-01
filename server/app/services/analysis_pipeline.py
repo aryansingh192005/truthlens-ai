@@ -12,6 +12,7 @@ from app.services.histogram_analysis import analyze_histogram
 from app.services.blur_analysis import analyze_blur
 from app.services.compression_analysis import analyze_compression
 from app.services.risk_assessment import calculate_risk
+from app.services.report_service import create_report
 
 
 def analyze_image_pipeline(image_path: str, filename: str):
@@ -41,7 +42,7 @@ def analyze_image_pipeline(image_path: str, filename: str):
 
     ela_filename = Path(ela["ela_image"]).name
 
-    return {
+    analysis = {
         "prediction": result,
         "confidence": f"{confidence}%",
         "model": "prithivMLmods/Deep-Fake-Detector-Model",
@@ -82,3 +83,9 @@ def analyze_image_pipeline(image_path: str, filename: str):
         "ela_image": f"http://127.0.0.1:8000/uploads/{ela_filename}",
         "ela_max_difference": ela["max_difference"],
     }
+
+    report = create_report(analysis)
+
+    analysis.update(report)
+
+    return analysis
