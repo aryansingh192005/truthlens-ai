@@ -1,26 +1,38 @@
 # TruthLens AI
 
-TruthLens AI is a full-stack AI-powered media authenticity platform designed to detect manipulated images and videos using deep learning and forensic analysis techniques.
+TruthLens AI is an AI-powered Deepfake Detection and Digital Image Forensics platform.
+
+## Features
+
+- AI Deepfake Detection
+- Face Detection
+- Error Level Analysis (ELA)
+- Metadata Analysis
+- Noise Analysis
+- Edge Analysis
+- Histogram Analysis
+- Blur Detection
+- Compression Analysis
+- Risk Assessment
+- Authentication
+- PDF/JSON Report Generation
 
 ## Tech Stack
-- Frontend: React + Tailwind CSS
-- Backend: FastAPI
-- Database: MongoDB
-- AI/ML: PyTorch, OpenCV (planned)
 
-## Current Phase
-Phase 1: Project foundation
-- Frontend setup
-- Backend setup
-- API health check
-- Detection route placeholders
-- MongoDB connection skeleton
+### Frontend
+- React
+- Tailwind CSS
+- Axios
 
-## Planned Features
-- Image deepfake detection
-- Video deepfake detection
-- Authenticity scoring
-- Explainable AI outputs
-- Dashboard and report history
-- Metadata analysis
-- Downloadable forensic reports
+### Backend
+- FastAPI
+- PyTorch
+- Transformers
+- OpenCV
+- Pillow
+
+## Run
+
+The application is deployed using Docker and FastAPI.
+
+Server starts on port **7860**.
