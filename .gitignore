@@ -1,21 +1,28 @@
-# Node
-client/node_modules
-client/dist
-
 # Python
-server/venv
-server/__pycache__
-server/.pytest_cache
-server/*.pyc
-server/**/*.pyc
+__pycache__/
+*.pyc
 
-# Env files
-server/.env
+# Uploads
+server/uploads/
 
-# OS / Editor
-.DS_Store
-Thumbs.db
+# Test images
+server/ai_engine/*.jpg
+server/ai_engine/*.jpeg
+server/ai_engine/*.png
+
+# Models
+server/models/
+
+# Virtual environments
+venv/
+.venv/
+
+# Node
+client/node_modules/
+client/dist/
+
+# VS Code
 .vscode/
 
-# Jupyter
-notebooks/.ipynb_checkpoints
+# Logs
+*.log
