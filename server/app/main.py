@@ -25,10 +25,14 @@ origins = [
 ]
 
 # Add Vercel frontend after deployment
-vercel_url = "https://YOUR_VERCEL_APP.vercel.app"
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 
-if vercel_url not in origins:
-    origins.append(vercel_url)
+    "https://truthlens-ai-git-main-aryansingh192005s-projects.vercel.app",
+    "https://truthlens-7bm9n440w-aryansingh192005s-projects.vercel.app",
+    "https://truthlens-2kpggmcsl-aryansingh192005s-projects.vercel.app",
+]
 
 app.add_middleware(
     CORSMiddleware,
