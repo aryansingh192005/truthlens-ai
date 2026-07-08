@@ -39,6 +39,18 @@ The platform is designed with simplicity in mind, allowing users to upload an im
 
 ---
 
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Frontend** | React, Vite, HTML5, CSS3, JavaScript |
+| **Backend** | FastAPI, Python |
+| **AI / ML** | PyTorch, EfficientNet |
+| **Deployment** | Vercel, Railway |
+| **Tools** | Git, GitHub |
+
+---
+
 ## 📸 Screenshots
 
 ### 🏠 Home Page
@@ -62,3 +74,38 @@ The platform is designed with simplicity in mind, allowing users to upload an im
 ### 📱 Mobile View
 
 ![Mobile](screenshots/mobile.png)
+
+---
+
+## ⚙️ How It Works
+
+1. Upload an image through the web interface.
+2. The image is securely sent to the FastAPI backend.
+3. The backend preprocesses the image for inference.
+4. The EfficientNet model analyzes the uploaded image.
+5. The model predicts whether the image is **Real** or **AI-Generated**.
+6. The prediction and confidence score are displayed to the user instantly.
+
+---
+
+## 🚀 Future Improvements
+
+- 🎥 Video deepfake detection
+- 🎙️ Audio deepfake detection
+- 📈 Model performance dashboard
+- 🔥 Explainable AI (Grad-CAM)
+- 👥 User authentication
+- 📂 Batch image analysis
+- 🌐 REST API for third-party integration
+
+---
+
+## 👨‍💻 Author
+
+**Aryan Singh**
+
+B.Tech Computer Science Engineering
+
+If you found this project helpful, consider giving it a ⭐ on GitHub.
+
+---
