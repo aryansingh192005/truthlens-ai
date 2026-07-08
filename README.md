@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.png" alt="TruthLens AI Banner">
+  <img src="assets/banners/banner.png" alt="TruthLens AI Banner">
 </p>
 
 <h1 align="center">TruthLens AI</h1>
