@@ -2,30 +2,63 @@
   <img src="docs/banner.png" alt="TruthLens AI Banner">
 </p>
 
+<h1 align="center">TruthLens AI</h1>
+
 <p align="center">
-
-<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-
-<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white">
-
-<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white">
-
-<img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
-
-<img src="https://img.shields.io/badge/EfficientNet-Deep%20Learning-blue?style=for-the-badge">
-
-<img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge">
-
+AI-Powered Media Authenticity Platform
 </p>
 
 <p align="center">
-
-<a href="https://truthlens-ai-jet.vercel.app">
-<img src="https://img.shields.io/badge/🚀_Live_Demo-2563EB?style=for-the-badge">
-</a>
-
-<a href="https://github.com/aryansingh192005/truthlens-ai">
-<img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
-</a>
-
+Detect • Analyze • Verify AI-Generated Images
 </p>
+
+<p align="center">
+  <a href="https://truthlens-ai-jet.vercel.app"><strong>🌐 Live Demo</strong></a> •
+  <a href="https://github.com/aryansingh192005/truthlens-ai"><strong>📂 Repository</strong></a>
+</p>
+
+---
+
+## 📖 Overview
+
+TruthLens AI is an AI-powered media authenticity platform designed to identify AI-generated and manipulated images. It combines a modern React frontend, a FastAPI backend, and a deep learning model built with PyTorch and EfficientNet to deliver fast and reliable predictions.
+
+The platform is designed with simplicity in mind, allowing users to upload an image and receive an authenticity prediction with a confidence score in just a few seconds.
+
+---
+
+## ✨ Features
+
+- 🧠 AI-powered deepfake detection
+- ⚡ Fast image analysis
+- 📊 Confidence score prediction
+- 🎨 Modern responsive interface
+- 🌙 Dark & Light mode
+- 📱 Mobile-friendly design
+- ☁️ Deployed on Vercel & Railway
+
+---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+
+![Home](screenshots/home.png)
+
+---
+
+### 📤 Upload Interface
+
+![Upload](screenshots/upload.png)
+
+---
+
+### 📊 Detection Result
+
+![Result](screenshots/result_fake.png)
+
+---
+
+### 📱 Mobile View
+
+![Mobile](screenshots/mobile.png)
