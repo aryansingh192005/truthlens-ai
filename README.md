@@ -73,7 +73,7 @@ The platform is designed with simplicity in mind, allowing users to upload an im
 
 ### 📱 Mobile View
 
-![Mobile](screenshots/mobile.png)
+![Mobile](screenshots/mobile.jpeg)
 
 ---
 
