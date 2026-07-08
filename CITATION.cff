@@ -1,0 +1,8 @@
+cff-version: 1.2.0
+title: "TruthLens AI"
+message: "If you use this project, please cite it using the metadata below."
+authors:
+  - family-names: Singh
+    given-names: Aryan
+repository-code: "https://github.com/aryansingh192005/truthlens-ai"
+license: MIT
